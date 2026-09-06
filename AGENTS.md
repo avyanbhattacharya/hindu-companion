@@ -1,16 +1,13 @@
 # Instructions for every human or AI maintainer
 
-Read README.md, docs/ARCHITECTURE.md, docs/TESTING.md, docs/CLOUDFLARE.md, docs/LESSONS.md and docs/STATUS.md before changes. These files are the continuity contract; do not assume chat history.
+Read `README.md`, `docs/ARCHITECTURE.md`, `docs/CONTENT-GOVERNANCE.md`, `docs/TESTING.md`, `docs/WORKFLOW.md`, and `docs/STATUS.md` before changes. They are the continuity contract.
 
-- Preserve unrelated edits. Inspect git status and branch before modifying. No force push, history rewrite, baseline movement, production deployment or secret/account changes without explicit scope.
-- Build one useful user workflow at a time. Default to semantic HTML, CSS and plain JavaScript. New dependencies or services need a reason and recorded tradeoffs.
-- Never upload working files or introduce telemetry/proxies silently. State all intentional network contact before it happens. Never put credentials in frontend code.
-- Untrusted HTML is not safe because it is in an iframe. Reconstruct an allowlist, block active content/resources, layer CSP, and test malicious inputs and network behavior.
-- Bound file size, complexity, work duration, history and retries. Handle cancellation, stale completions and empty output.
-- Add regression tests with every meaningful change. Keep CI bounded; never hide failures, add fixed sleeps or disable coverage to obtain green.
-- Run static tests, build, Chromium and targeted WebKit/mobile checks. Inspect the actual CI results for the commit. Report blocked checks separately.
-- Verify generated docs. Edit Markdown sources, not generated HTML. Never deploy tests, docs source, secrets or build tooling as public assets.
-- Preview branches are not releases. Production uses main; protect merges with required checks. Preview deployment success is not evidence that GitHub tests passed.
-- Never claim offline support, GPU acceleration, universal browser compatibility or a live deployment based on API detection or code inspection alone.
-- Update docs/STATUS.md after each meaningful session: branch/commit, tests run, failures, next action, deployment evidence and unresolved choices.
-- Keep a user's machine report technical and manual-only. Do not store working files, URLs, image contents, secrets or unrelated personal history.
+- Preserve unrelated edits. Inspect branch and current commit before modifying. Do not force-push, rewrite history, move a baseline, deploy, alter secrets, or change a domain without explicit scope.
+- Keep the runtime static: semantic HTML, CSS, and browser JavaScript. New dependencies, APIs, accounts, analytics, or server behavior require a documented decision and regression tests.
+- Do not add network contact silently. The app currently has no runtime fetches; explain and test any change to that boundary. Never place credentials in browser code.
+- Calendar data, lyrics, translations, and recordings require source, attribution, rights status, and human-review metadata. Do not represent curated sample data as a universal or authoritative observance.
+- Add regression tests for every meaningful workflow change. Keep CI bounded; never hide a failure, add arbitrary sleeps, or skip coverage to obtain green.
+- Run static tests, build, Chromium, WebKit, and mobile-WebKit checks. Inspect the actual CI run for the exact commit.
+- Publish only `dist/`. GitHub Pages deployment must follow a successful quality workflow. Generated docs are outputs; edit Markdown sources.
+- Keep production and preview semantics explicit. `DEPLOY_ENV=production` is the release build; local and preview builds remain noindex.
+- Update `docs/STATUS.md` after a meaningful session with commit, tests, deployment evidence, unresolved choices, and next action.
