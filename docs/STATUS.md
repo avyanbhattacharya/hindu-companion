@@ -2,6 +2,8 @@
 
 Last updated: 2026-09-06
 
+Current main commit: `adf2803954a0d20f830dbd83b2ebc74dd0b6b3f1`
+
 ## Current product
 
 Repository: `avyanbhattacharya/hindu-companion`  
@@ -10,8 +12,8 @@ Product: Bhakti Companion — a static Hindu calendar and devotional-resource ap
 
 ## Verified evidence
 
-- Quality workflow passed for main commit `7e9dc978fd8715eb222850d430fec9d8a22830f7`: https://github.com/avyanbhattacharya/hindu-companion/actions/runs/34055737554
-- GitHub Pages deployment passed for the same commit: https://github.com/avyanbhattacharya/hindu-companion/actions/runs/34055737547
+- Quality workflow passed for main commit `adf2803954a0d20f830dbd83b2ebc74dd0b6b3f1`: https://github.com/avyanbhattacharya/hindu-companion/actions/runs/34059148850
+- GitHub Pages deployment ran after that successful quality workflow and passed: https://github.com/avyanbhattacharya/hindu-companion/actions/runs/34059196143
 - GitHub Pages URL: https://avyanbhattacharya.github.io/hindu-companion/
 
 ## Current configuration
