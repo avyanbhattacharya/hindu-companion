@@ -1,0 +1,6 @@
+{
+  "name": "Bhakti Companion",
+  "description": "Daily Hindu companion with location-based calendar, tithi, festival guides, and a curated library of bhajans and prayers in Hindi, Bengali, and Sanskrit.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
