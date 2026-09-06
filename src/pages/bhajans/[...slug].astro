@@ -1,6 +1,102 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import { getCollection, render } from 'astro:content';
-export async function getStaticPaths() { return (await getCollection('bhajans')).map(entry => ({ params: { slug: entry.slug }, props: { entry } })); }
-const { entry } = Astro.props; const { Content } = await render(entry);
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const bhajans = await getCollection('bhajans');
+  // Include all entries except 'not-published' for static route generation
+  return bhajans
+    .filter(entry => entry.data.status !== 'not-published')
+    .map(entry => ({
+      params: { slug: entry.slug },
+      props: { entry }
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const badgeLabels: Record<string, string> = {
+  'verified': 'Verified Content',
+  'draft': 'Draft - In Development',
+  'needs-review': 'Needs Review',
+  'not-published': 'Unpublished Draft'
+};
+
+const badgeClasses: Record<string, string> = {
+  'verified': 'badge-verified',
+  'draft': 'badge-draft',
+  'needs-review': 'badge-needs-review',
+  'not-published': 'badge-not-published'
+};
+
+const status = entry.data.status || 'verified';
 ---
-<BaseLayout title={`${entry.data.title} — Hindu Companion`} description={entry.data.description}><article class="prose"><div class="eyebrow">{entry.data.language} · {entry.data.category}</div><h1>{entry.data.title}</h1>{entry.data.titleOriginal && <p class="lead">{entry.data.titleOriginal}</p>}<p class="notice"><strong>Source note:</strong> {entry.data.source}</p><Content /></article></BaseLayout>
+<BaseLayout title={`${entry.data.title} — Hindu Companion`} description={entry.data.description}>
+  <article class="prose">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem;">
+      <div class="eyebrow">{entry.data.language} · {entry.data.category} · {entry.data.deity}</div>
+      <span class={`badge ${badgeClasses[status]}`}>{badgeLabels[status]}</span>
+    </div>
+
+    <h1>{entry.data.title}</h1>
+    {entry.data.titleOriginal && <p class="lead" style="font-family: var(--serif); font-size: 1.4rem; color: var(--maroon);">{entry.data.titleOriginal}</p>}
+
+    <!-- Metadata Grid Display -->
+    <div class="meta-grid">
+      <div class="meta-item">
+        <span class="meta-item-label">Source Edition</span>
+        <span class="meta-item-value">{entry.data.sourceEdition || entry.data.source}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-item-label">Rights Status</span>
+        <span class="meta-item-value">{entry.data.rightsStatus}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-item-label">Translation Status</span>
+        <span class="meta-item-value">{entry.data.translationStatus}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-item-label">Reviewer</span>
+        <span class="meta-item-value">{entry.data.reviewer || 'Editorial Board'}</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-item-label">Tradition</span>
+        <span class="meta-item-value">{entry.data.traditions && entry.data.traditions.length ? entry.data.traditions.join(', ') : entry.data.tradition}</span>
+      </div>
+      {entry.data.author && (
+        <div class="meta-item">
+          <span class="meta-item-label">Author</span>
+          <span class="meta-item-value">{entry.data.author}</span>
+        </div>
+      )}
+    </div>
+
+    {entry.data.tags && entry.data.tags.length > 0 && (
+      <div class="tags-row" style="margin-bottom: 1.5rem;">
+        <span style="font-size: .85rem; font-weight: 700; color: var(--muted); align-self: center;">Tags:</span>
+        {entry.data.tags.map((tag: string) => <span class="tag-pill">#{tag}</span>)}
+      </div>
+    )}
+
+    {entry.data.transliteration && (
+      <div class="notice" style="margin-bottom: 1.5rem;">
+        <strong>Transliteration:</strong>
+        <p style="margin: .3rem 0 0; font-style: italic;">{entry.data.transliteration}</p>
+      </div>
+    )}
+
+    {entry.data.englishMeaning && (
+      <div class="notice" style="margin-bottom: 1.5rem; border-left-color: var(--saffron);">
+        <strong>English Meaning:</strong>
+        <p style="margin: .3rem 0 0;">{entry.data.englishMeaning}</p>
+      </div>
+    )}
+
+    <p class="notice"><strong>Source note:</strong> {entry.data.source}</p>
+
+    <div class="entry-content" style="margin-top: 2rem;">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
