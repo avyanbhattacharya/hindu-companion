@@ -1,0 +1,17 @@
+{
+  "name": "Hindu Companion",
+  "short_name": "HinduCompanion",
+  "description": "Local-first web application for Hindu Companion.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff7ed",
+  "theme_color": "#7c2d12",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hindu Companion - Local-First Web Starter</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header>
+      <img src="icon.svg" alt="Hindu Companion Logo" />
+      <h1>Hindu Companion</h1>
+      <p class="subtitle">Local-First Web Application Starter</p>
+    </header>
+
+    <section class="card">
+      <label for="input">Local Note / Practice Intent</label>
+      <input id="input" type="text" placeholder="Type something to store locally..." />
+      <button id="save">Save to Browser Storage</button>
+
+      <div class="output-container">
+        <p id="output">Nothing saved yet</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>100% Local-First & Private · Zero Server Dependencies</p>
+    </footer>
+  </main>
+
+  <script src="storage.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(err => {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
