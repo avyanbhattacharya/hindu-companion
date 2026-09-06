@@ -1,8 +1,6 @@
 const http = require('node:http'), fs = require('node:fs'), path = require('node:path');
 const root = path.resolve(__dirname, '../dist');
-if (!fs.existsSync(root)) {
-  require('./build.cjs').build();
-}
+require('./build.cjs').build();
 const port = 3000;
 const host = '0.0.0.0';
 http.createServer((req, res) => {
@@ -16,6 +14,9 @@ http.createServer((req, res) => {
   } catch {}
   fs.readFile(file, (error, data) => {
     if (error) { res.writeHead(404).end('Not found'); return; }
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     res.setHeader('Content-Type', { '.html':'text/html', '.js':'text/javascript', '.css':'text/css', '.xml':'application/xml' }[path.extname(file)] || 'text/plain');
     res.end(data);
   });

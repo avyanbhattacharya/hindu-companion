@@ -125,7 +125,7 @@
     el.valSun.textContent = `Rise: ${loc.sunriseApprox} · Set: ${loc.sunsetApprox}`;
     el.valTithi.textContent = "Krishna Paksha Ashtami / Navami";
     el.valMasa.textContent = "Bhadrapada (Purnimanta tradition)";
-    el.valFasting.textContent = "Sattvic vegetarian diet; evening japa";
+    el.valFasting.textContent = "Sattvic vegetarian diet; evening prayers & aarti";
 
     // Upcoming Events
     const events = window.BHAKTI_CALENDAR.events;
