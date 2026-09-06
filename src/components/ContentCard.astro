@@ -1,10 +1,12 @@
 ---
 const { href, title, meta, description, original } = Astro.props;
+const depth = Astro.url.pathname.split('/').filter(Boolean).length;
+const internalHref = `${'../'.repeat(depth)}${href.replace(/^\//, '')}/`;
 ---
 <article class="card">
   <div class="meta">{meta}</div>
-  <h3><a href={href}>{title}</a></h3>
+  <h3><a href={internalHref}>{title}</a></h3>
   {original && <p lang="sa">{original}</p>}
   <p>{description}</p>
-  <a class="meta" href={href}>Read and practice →</a>
+  <a class="meta" href={internalHref}>Read and practice →</a>
 </article>
