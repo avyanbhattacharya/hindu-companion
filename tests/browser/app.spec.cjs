@@ -8,3 +8,9 @@ test('Markdown-backed bhajan and guide pages render', async ({ page }) => {
   await page.goto('/bhajans'); await page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' }).first().click(); await expect(page.getByRole('heading', { name: 'Hare Krishna Maha-Mantra' })).toBeVisible();
   await page.goto('/guides'); await page.getByRole('link', { name: 'Ekadashi Vrata' }).first().click(); await expect(page.getByRole('heading', { name: 'Ekadashi Vrata' })).toBeVisible();
 });
+test('internal links preserve the GitHub Pages project path', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.getByRole('link', { name: 'Explore bhajans' })).toHaveAttribute('href', 'bhajans/');
+  await page.getByRole('link', { name: 'Explore bhajans' }).click();
+  await expect(page).toHaveURL(/\/bhajans\/$/);
+});
