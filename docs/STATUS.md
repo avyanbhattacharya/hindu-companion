@@ -36,4 +36,10 @@ Physical-device/manual results: Verified calendar location toggles (Phoenix, Kol
 Open risks and next action: Push feature/bhakti-companion to remote and create Pull Request to main; verify GitHub Actions CI.
 Last updated: 2026-09-06
 
+## CI repair
+
+Branch: `fix/browser-ci-server`.
+
+The initial main workflow attempt was cancelled during Playwright browser download. A retry completed installation and exposed the actual regression: Playwright timed out waiting for the local server. The repair restores the starter's verified contract: the build runs before tests, the server serves existing `dist` output on loopback port 4173, and Playwright starts it with `npm start`. Pull-request CI is pending for the repair.
+
 Never replace an unknown with an assumed success.
