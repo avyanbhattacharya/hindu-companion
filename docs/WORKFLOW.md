@@ -1,17 +1,22 @@
-# Branches, releases and continuity
+# Workflow and releases
 
-main is releasable production. feature/* and fix/* are short-lived work branches; test/* holds experiments. Create a pull request, run bounded checks, publish a preview, review the UX/output and merge only after required checks. Configure repository branch protection; a YAML file alone does not protect main.
+## Branches
 
-Long-lived experiment branches need deliberate main merges and branch-specific regression checks. Preserve their architecture status and history. Keep a known-green baseline tag/branch immutable. Never force-push to make histories look synchronized. Do not promise ongoing branch maintenance unless a scheduled task or CI mechanism actually exists.
+`main` is the release branch. Use short-lived `feature/*` or `fix/*` branches and a pull request for changes. Protect `main` with the `Starter quality` check when repository settings permit it.
 
-## Session handoff
+## Release gate
 
-Update docs/STATUS.md at each milestone with source commit, current branch, intent, edits, exact commands and results, CI URL, preview URL/commit, manual evidence, known blockers and next action. Label proposed versus verified. Do not make a chat conversation the only place decisions live.
+1. A pull request runs the quality workflow.
+2. Merge only after the quality result for the reviewed head commit is green.
+3. A successful `Starter quality` run on `main` triggers GitHub Pages.
+4. The Pages workflow checks out that validated commit, builds `dist/` with `DEPLOY_ENV=production`, and publishes it.
 
-## New feature checklist
+A Pages success is evidence of publication, not of domain DNS, browser compatibility on physical devices, or calendar/content accuracy.
 
-Useful regular-user task; local-first justification; inputs/limits; deterministic happy path; malformed input; cancellation/stale state; output inspection; keyboard/mobile; network policy; dependencies and licenses; tests in CI; architecture/ADR changes; catalog/canonical/sitemap; preview review; manual device requirements; rollback plan.
+## Domain
 
-## ADR template
+`hinducompanion.com` is the intended canonical domain. The repository provides `public/CNAME`; GitHub Pages and DNS must be configured separately. Keep the GitHub Pages URL available as a fallback until custom-domain HTTPS is verified.
 
-Title/date; status (proposed/accepted/superseded); problem; options; chosen approach and why; consequences; privacy/security boundaries; automated evidence; manual evidence; rollback/revisit trigger. Store meaningful decisions in a new Markdown document under docs.
+## Handoff
+
+Update `STATUS.md` with the commit, test/deployment URLs, verified facts, remaining risks, and next action. Store architecture or content-policy decisions as Markdown, not only in chat.
