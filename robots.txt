@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://avyanbhattacharya.github.io/hindu-companion/sitemap.xml

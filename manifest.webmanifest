@@ -1,0 +1,18 @@
+{
+  "name": "Hindu Companion - Local-First Devotional Japa Counter",
+  "short_name": "HinduCompanion",
+  "description": "A private, lightweight, local-first web app and digital mala counter for naam japa and daily devotional practice.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff7ed",
+  "theme_color": "#7c2d12",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
