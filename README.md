@@ -1,33 +1,35 @@
-# Local-first Web Starter
+# Bhakti Companion
 
-A standalone, exportable project distilled from Clean Local Tools. No framework, server inference, account, analytics or cloud storage is required for the sample app. This is a source-code template for humans and any AI agent, not an installed ChatGPT skill.
+A static, local-first Hindu resource: a location-aware devotional calendar, festival guides, and a curated library of bhajans and prayers. The first release supports Hindi, Bengali, Sanskrit, Roman transliteration, and English meaning.
 
-## Start here
+## What it does now
 
-1. Read AGENTS.md, docs/ARCHITECTURE.md and docs/LESSONS.md.
-2. Clone avyanbhattacharya/local-first-web-starter, or use GitHub's “Use this template” once the repository's template setting is enabled. Alternatively export this directory into a NEW absolute destination:
-   node scripts/export.cjs /absolute/path/my-new-project
-3. In the project directory: npm ci
-4. npm run test:static
-5. npm run build
-6. npx playwright install --with-deps chromium webkit
-7. npm run test:browser
-8. npm start; visit http://127.0.0.1:4173
+- Shows curated calendar and observance information for Phoenix, Kolkata, New York, and London.
+- Lets people search devotional songs, save favorites on their device, use a sing-along reader, and prepare a home program.
+- Runs entirely in the browser. It has no account, analytics, server API, or working-file upload.
 
-Use Node 24. Change site.config.json name and origin; retain main as productionBranch unless deliberately changing it in BOTH code and Cloudflare. The placeholder example.invalid intentionally blocks production builds.
+## Development
 
-## Make it your project
+Use Node 24.
 
-Initialize a NEW git repository in the exported directory, commit its files (including package-lock.json and .github), and push to a new repository you control. The exporter never reuses the original .git history, credentials, node_modules, build outputs or runtime artifacts. Do not publish this parent repository as your new product.
+1. Read `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/CONTENT-GOVERNANCE.md`, `docs/TESTING.md`, and `docs/STATUS.md`.
+2. Run `npm ci`.
+3. Run `npm run test:static`.
+4. Run `npm run build`.
+5. Install browsers once with `npx playwright install --with-deps chromium webkit`.
+6. Run `npm run test:browser`.
+7. Run `npm start` and open `http://127.0.0.1:4173`.
 
-The working example trims text and downloads the actual result locally. Replace it with one useful workflow and extend the tests. The CSS is intentionally small and independent of the original product's identity. HTML, CSS and browser JS are the runtime; Node is for development, tests and compilation only.
+## Hosting
 
-Read docs/CLOUDFLARE.md for production and all-branch previews. Publish only dist, never repository root. No Cloudflare account, project or custom domain has been created by exporting this starter.
+GitHub Pages publishes a successful quality-validated `main` commit. The intended public origin is `https://hinducompanion.com`; `public/CNAME` declares that name for GitHub Pages. DNS and GitHub Pages custom-domain verification must be completed before relying on that URL.
 
-## What is saved
+Only `dist/` is published. The production build is explicit: `DEPLOY_ENV=production npm run build`. Local and preview builds remain noindex.
 
-Architecture and trust boundaries; fast/static/deep/compatibility test strategy; CI budgets and diagnostic habits; Cloudflare setup and troubleshooting; branch/PR/release rules; Markdown-to-HTML ownership; SEO/privacy/offline requirements; optional WebGPU/WASM architecture; exact project lessons and an evidence/status ledger; feature and session-handoff templates.
+## Content responsibility
 
-## Verification boundary
+Calendar dates and devotional texts are curated static content, not an authoritative panchang service. Every new entry needs provenance, rights/reuse status, and human review as described in `docs/CONTENT-GOVERNANCE.md`.
 
-See this repository's Starter quality workflow for current checks and docs/STATUS.md for the starter's historical verification evidence. Real print dialogs, physical GPUs, and your new Cloudflare configuration require separate checks.
+## Current evidence
+
+The latest verified CI and Pages deployment are recorded in `docs/STATUS.md`. Do not treat an earlier green run as evidence for a newer commit.
