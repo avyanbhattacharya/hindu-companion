@@ -1,0 +1,6 @@
+{
+  "name": "Local Web Starter",
+  "description": "A standalone local-first web starter template with privacy-focused architecture, client-side storage, and offline capabilities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,97 +1,33 @@
-# Hindu Companion – Local-First Web Starter
+# Local-first Web Starter
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](LICENSE)
-[![Local-First](https://img.shields.io/badge/Architecture-Local--First-orange.svg)](#local-first-architecture)
-[![PWA Ready](https://img.shields.io/badge/PWA-Offline--Ready-green.svg)](#pwa--offline-capabilities)
+A standalone, exportable project distilled from Clean Local Tools. No framework, server inference, account, analytics or cloud storage is required for the sample app. This is a source-code template for humans and any AI agent, not an installed ChatGPT skill.
 
-A free, private, lightweight, and local-first web application starter for **Hindu Companion** – supporting Naam Japa counting, digital mala tracking, and daily devotional practice.
+## Start here
 
----
+1. Read AGENTS.md, docs/ARCHITECTURE.md and docs/LESSONS.md.
+2. Clone avyanbhattacharya/local-first-web-starter, or use GitHub's “Use this template” once the repository's template setting is enabled. Alternatively export this directory into a NEW absolute destination:
+   node scripts/export.cjs /absolute/path/my-new-project
+3. In the project directory: npm ci
+4. npm run test:static
+5. npm run build
+6. npx playwright install --with-deps chromium webkit
+7. npm run test:browser
+8. npm start; visit http://127.0.0.1:4173
 
-## Technical Context & Background
+Use Node 24. Change site.config.json name and origin; retain main as productionBranch unless deliberately changing it in BOTH code and Cloudflare. The placeholder example.invalid intentionally blocks production builds.
 
-This project initializes `hindu-companion` based on local-first web starter principles and learnings from prior devotional counter development (`naam-japa-counter`).
+## Make it your project
 
-### Key Technical Insights from Prior Work:
-1. **Lock-Screen Resilience on Mobile (iOS / Android)**:
-   - **Problem**: Mobile OSs (especially iOS Safari) pause or throttle JavaScript execution when the device screen locks or the tab goes into the background. Relying solely on `setInterval()` tick counts causes time/count drift.
-   - **Solution**: The counter computes counts dynamically from actual elapsed timestamp differences (`Date.now() - startedAt`). When returning from a locked screen, the count dynamically catches up to real elapsed time:
-     $$\text{Count} = \text{Accumulated Count} + \frac{\text{Elapsed Active Milliseconds}}{\text{Seconds per Naam} \times 1000}$$
+Initialize a NEW git repository in the exported directory, commit its files (including package-lock.json and .github), and push to a new repository you control. The exporter never reuses the original .git history, credentials, node_modules, build outputs or runtime artifacts. Do not publish this parent repository as your new product.
 
-2. **108-Count Round Tracking**:
-   - In traditional Hindu devotional Japa practice, 1 mala equals **108** repetitions.
-   - The application automatically calculates completed rounds ($\lfloor \text{Total Count} / 108 \rfloor$) and current round progress ($\text{Total Count} \pmod{108}$).
+The working example trims text and downloads the actual result locally. Replace it with one useful workflow and extend the tests. The CSS is intentionally small and independent of the original product's identity. HTML, CSS and browser JS are the runtime; Node is for development, tests and compilation only.
 
-3. **Dual Counter Modes**:
-   - **Touchless Japa Counter**: Hands-free automatic counting with adjustable pace (1.0 to 5.0 seconds per naam).
-   - **Tap Japa Counter**: Digital mala with a large, tactile +1 tap button.
+Read docs/CLOUDFLARE.md for production and all-branch previews. Publish only dist, never repository root. No Cloudflare account, project or custom domain has been created by exporting this starter.
 
----
+## What is saved
 
-## Local-First Architecture Principles
+Architecture and trust boundaries; fast/static/deep/compatibility test strategy; CI budgets and diagnostic habits; Cloudflare setup and troubleshooting; branch/PR/release rules; Markdown-to-HTML ownership; SEO/privacy/offline requirements; optional WebGPU/WASM architecture; exact project lessons and an evidence/status ledger; feature and session-handoff templates.
 
-`hindu-companion` is built upon local-first web application principles:
+## Verification boundary
 
-- **100% Private & Serverless**: No user registration, no server backend, no analytics, and no external tracking scripts. All data belongs to the user.
-- **Client-Side Persistence**: State is persisted locally using browser `localStorage`. Your session persists across tab closes and device reboots.
-- **Data Portability**: Integrated local JSON Export & Import tools allow users to back up or restore practice records locally.
-- **Offline PWA Support**: Built with Web App Manifest (`manifest.webmanifest`) and Service Worker (`sw.js`) for offline installation and home-screen access.
-
----
-
-## Project Structure
-
-```
-hindu-companion/
-├── index.html            # Touchless Japa Counter & Companion Dashboard
-├── tap.html              # Tap Japa Counter (Digital Mala)
-├── sw.js                 # Service Worker for offline caching
-├── manifest.webmanifest  # PWA web app manifest
-├── icon.svg              # Lotus/Mala SVG vector icon
-├── .nojekyll             # GitHub Pages Jekyll bypass
-├── robots.txt            # Search engine crawler directives
-├── sitemap.xml           # Site map structure
-├── LICENSE               # MIT License
-└── README.md             # Technical documentation
-```
-
----
-
-## Local Development & Usage
-
-Because `hindu-companion` is built with vanilla HTML, CSS, and modern Web JavaScript, no heavy compilation or Node.js build process is required.
-
-### Quick Start:
-1. Clone or download this repository:
-   ```bash
-   git clone https://github.com/avyanbhattacharya/hindu-companion.git
-   cd hindu-companion
-   ```
-2. Open `index.html` directly in any web browser, or serve it using a lightweight local web server:
-   ```bash
-   npx http-server -p 8080 .
-   ```
-3. Open `http://localhost:8080` in your browser.
-
----
-
-## Publishing to GitHub Pages
-
-1. Navigate to your repository's **Settings** on GitHub.
-2. Select **Pages** under *Code and automation*.
-3. Under **Build and deployment**, select **Deploy from a branch**.
-4. Choose the `main` branch and `/ (root)`, then click **Save**.
-5. Access your live site at `https://<username>.github.io/hindu-companion/`.
-
----
-
-## Mobile & Home Screen Installation (PWA)
-
-- **iOS (Safari)**: Open the web app, tap the **Share** button, and select **Add to Home Screen**.
-- **Android (Chrome)**: Open the web app, tap the menu (⋮), and select **Install app** or **Add to Home screen**.
-
----
-
-## License
-
-Distributed under the [MIT License](LICENSE).
+See this repository's Starter quality workflow for current checks and docs/STATUS.md for the starter's historical verification evidence. Real print dialogs, physical GPUs, and your new Cloudflare configuration require separate checks.
