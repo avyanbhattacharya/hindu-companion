@@ -26,14 +26,14 @@ https://github.com/avyanbhattacharya/passport-photo-web/actions/runs/34004512600
 ## Fill after adopting
 
 Repository: avyanbhattacharya/local-first-web-starter
-Branch and commit: main
+Branch and commit: feature/bhakti-companion (branched from main at 18c17f8)
 Product goal: Bhakti Companion — Daily Hindu companion connecting calendar, tithi, festival guides, and authentic devotional library (Hindi, Bengali, Sanskrit) with on-device favorites, sing-along views, and home program booklets.
 Canonical origin: https://example.invalid (configured in site.config.json; change before production release)
 Production host/branch: Cloudflare Pages / main
 Preview policy and verified deployment URL/commit: Preview builds emit noindex headers; tested locally on port 3000
 Static/build/browser results and CI URL: 3 static node:test checks pass (docs escape, preview headers, export). Browser tests updated for Bhakti Companion workflows.
 Physical-device/manual results: Verified calendar location toggles (Phoenix, Kolkata, NY, London), song searches with diacritic tolerance, verse toggles (original script, roman transliteration, english meaning), font size modifiers, and home program queue builder.
-Open risks and next action: Enable and test GitHub Actions CI on main with Playwright browser installation; curate additional songs as requested.
+Open risks and next action: Push feature/bhakti-companion to remote and create Pull Request to main; verify GitHub Actions CI.
 Last updated: 2026-09-06
 
 Never replace an unknown with an assumed success.
