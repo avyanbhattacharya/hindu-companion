@@ -16,7 +16,8 @@ function build() {
   const config = JSON.parse(fs.readFileSync(path.join(root, 'site.config.json'), 'utf8'));
   const origin = new URL(config.origin);
   if (origin.protocol !== 'https:' || origin.username || origin.password || origin.pathname !== '/' || origin.search || origin.hash) throw Error('Configure a bare HTTPS origin.');
-  const preview = process.env.CF_PAGES_BRANCH ? process.env.CF_PAGES_BRANCH !== config.productionBranch : true;
+  const deploymentMode = process.env.DEPLOY_ENV || (process.env.CF_PAGES_BRANCH ? (process.env.CF_PAGES_BRANCH === config.productionBranch ? 'production' : 'preview') : 'preview');
+  const preview = deploymentMode !== 'production';
   if (!preview && origin.hostname.endsWith('.invalid')) throw Error('Set your real production origin in site.config.json before deploying main.');
   // This exact generated directory is owned by the build; never remove a caller-supplied path.
   fs.rmSync(out, { recursive: true, force: true }); fs.mkdirSync(out, { recursive: true });
