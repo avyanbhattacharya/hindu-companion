@@ -1,0 +1,24 @@
+---
+import '../styles/theme.css';
+const { title = 'Hindu Companion', description = 'A thoughtful Hindu resource for daily practice, devotional music, and festival learning.' } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [['/','Home'],['/calendar','Calendar'],['/bhajans','Bhajans'],['/guides','Guides']];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(path, Astro.site)} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header"><div class="shell topbar">
+      <a class="brand" href="/">Hindu Companion<small>Learn · Listen · Observe</small></a>
+      <nav aria-label="Primary navigation">{nav.map(([href, label]) => <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>)}</nav>
+    </div></header>
+    <main class="shell"><slot /></main>
+    <footer class="site-footer"><div class="shell">A calm, community-minded Hindu resource. Texts and observances are curated; confirm local festival timing with your trusted tradition or panchang.</div></footer>
+  </body>
+</html>

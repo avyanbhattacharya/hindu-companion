@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'; import ContentCard from '../../components/ContentCard.astro'; import { getCollection } from 'astro:content';
+const guides = await getCollection('guides');
+---
+<BaseLayout title="Festival guides — Hindu Companion"><div class="eyebrow">Festival learning</div><h1>Celebrate with understanding.</h1><p class="lead">Practical, family-friendly starting points. Local dates and practice details should always be confirmed with a trusted panchang or teacher.</p><div class="grid section">{guides.map(item => <ContentCard href={`/guides/${item.slug}`} title={item.data.title} meta={item.data.festival} description={item.data.description} />)}</div></BaseLayout>

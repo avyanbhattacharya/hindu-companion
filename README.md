@@ -1,35 +1,30 @@
-# Bhakti Companion
+# Hindu Companion
 
-A static, local-first Hindu resource: a location-aware devotional calendar, festival guides, and a curated library of bhajans and prayers. The first release supports Hindi, Bengali, Sanskrit, Roman transliteration, and English meaning.
+Hindu Companion is a static, content-first resource for devotional music, festival learning, and eventually a carefully sourced local calendar. It runs on Astro and deploys as static files to GitHub Pages—there is no application server, account system, or runtime content API.
 
-## What it does now
+## Content workflow
 
-- Shows curated calendar and observance information for Phoenix, Kolkata, New York, and London.
-- Lets people search devotional songs, save favorites on their device, use a sing-along reader, and prepare a home program.
-- Runs entirely in the browser. It has no account, analytics, server API, or working-file upload.
+- Add a bhajan, kirtan, prayer, or guide as Markdown under `src/content/`.
+- Every entry needs a concise description and a `source` field. Follow `docs/CONTENT-GOVERNANCE.md` before publishing text, translations, audio, or images.
+- Astro compiles Markdown into static pages during `npm run build`.
 
 ## Development
 
 Use Node 24.
 
-1. Read `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/CONTENT-GOVERNANCE.md`, `docs/TESTING.md`, and `docs/STATUS.md`.
-2. Run `npm ci`.
-3. Run `npm run test:static`.
-4. Run `npm run build`.
-5. Install browsers once with `npx playwright install --with-deps chromium webkit`.
-6. Run `npm run test:browser`.
-7. Run `npm start` and open `http://127.0.0.1:4173`.
+1. `npm ci`
+2. `npm run test:static`
+3. `npm run build`
+4. `npx playwright install --with-deps chromium webkit` (once)
+5. `npm run test:browser`
+6. `npm run dev`
 
-## Hosting
+`npm run build` outputs only deployable files in `dist/`. GitHub Pages publishes a validated `main` commit. The intended public origin is `https://hinducompanion.com`; DNS and GitHub Pages custom-domain verification remain an external step.
 
-GitHub Pages publishes a successful quality-validated `main` commit. The intended public origin is `https://hinducompanion.com`; `public/CNAME` declares that name for GitHub Pages. DNS and GitHub Pages custom-domain verification must be completed before relying on that URL.
+## Styling
 
-Only `dist/` is published. The production build is explicit: `DEPLOY_ENV=production npm run build`. Local and preview builds remain noindex.
+The visual system is intentionally token-based. Start in `src/styles/theme.css`: colors, type families, spacing radius, and shadows are CSS variables so a later visual redesign does not require touching every component.
 
-## Content responsibility
+## Calendar scope
 
-Calendar dates and devotional texts are curated static content, not an authoritative panchang service. Every new entry needs provenance, rights/reuse status, and human review as described in `docs/CONTENT-GOVERNANCE.md`.
-
-## Current evidence
-
-The latest verified CI and Pages deployment are recorded in `docs/STATUS.md`. Do not treat an earlier green run as evidence for a newer commit.
+The calendar page is intentionally a roadmap until a reviewed data source and calculation policy are available. Do not publish example or guessed tithi/festival dates as a live panchang.

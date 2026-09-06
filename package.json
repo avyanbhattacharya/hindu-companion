@@ -1,19 +1,17 @@
 {
-  "name": "local-web-starter",
+  "name": "hindu-companion",
   "version": "1.0.0",
   "private": true,
-  "engines": {
-    "node": ">=22"
-  },
+  "type": "module",
+  "engines": { "node": ">=22" },
   "scripts": {
-    "dev": "node scripts/serve.cjs",
-    "build": "node scripts/build.cjs",
-    "start": "node scripts/serve.cjs",
+    "dev": "astro dev",
+    "build": "astro build",
+    "start": "astro preview --host 127.0.0.1 --port 4173",
     "test:static": "node --test tests/*.test.cjs",
     "test:browser": "playwright test",
     "test": "npm run test:static && npm run build && npm run test:browser"
   },
-  "devDependencies": {
-    "@playwright/test": "1.62.1"
-  }
+  "dependencies": { "@astrojs/sitemap": "3.1.6", "astro": "4.16.19" },
+  "devDependencies": { "@playwright/test": "1.62.1" }
 }
