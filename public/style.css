@@ -825,3 +825,84 @@ p.section-desc {
     padding-top: 150px;
   }
 }
+
+
+/* Small-screen layout: preserve every home-program action without horizontal overflow. */
+@media (max-width: 640px) {
+  .header-inner,
+  main.app-main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .brand-section {
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+
+  .brand-title {
+    font-size: 18px;
+  }
+
+  .today-banner,
+  .program-builder,
+  .guide-detail-card {
+    padding: 16px;
+  }
+
+  .cards-grid,
+  .today-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .program-item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  .program-item-details {
+    min-width: 0;
+  }
+
+  .program-item-actions {
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .modal-header,
+  .modal-controls,
+  .modal-body,
+  .modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .program-header-controls > div {
+    min-width: 0;
+  }
+
+  .program-header-controls > div:first-child,
+  #home-program-builder > div:last-child {
+    flex-wrap: wrap;
+  }
+
+  #program-preset-select,
+  #add-song-select {
+    min-width: 0;
+    max-width: 100% !important;
+  }
+
+  #add-song-select {
+    flex: 1 1 160px !important;
+  }
+}
