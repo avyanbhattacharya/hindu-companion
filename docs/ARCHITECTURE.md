@@ -1,25 +1,30 @@
 # Architecture
 
-## Default stack
+## Runtime and trust boundary
 
-Runtime: static semantic HTML, CSS, plain browser JavaScript. Build/test: Node 24, built-in node:test, Playwright 1.62.1. Dependencies are development-only and locked. Hosting target: Cloudflare Pages static output. No framework or AI dependency is included just to make this a template.
+Bhakti Companion is a static site built from semantic HTML, CSS, and plain browser JavaScript. Node 24 and Playwright are development-only. There is no runtime server, account system, analytics, or API key.
 
-public contains runtime sources only. scripts/build.cjs owns dist. docs contains trusted repository Markdown compiled into noindex HTML. tests contains cheap Node tests and real browser tests. site.config.json owns name, canonical production origin and production branch. The build refuses a placeholder production domain.
+Runtime sources live in `public/`; `scripts/build.cjs` copies only those files into `dist/`. Repository docs are compiled into noindex handbook pages. Tests, source assets, package metadata, and build tooling are never part of the published artifact.
 
-## Data path
+The deployed page makes no network requests after its static assets load. Favorites and Home Program selections are stored in browser local storage on the current device.
 
-Explicit input -> validate/bound -> browser-local processing -> verify result -> Blob/download or print -> release object URLs/resources. Original files remain unchanged. Use workers when processing becomes expensive; workers do not remove the need for watchdogs or resource limits.
+## Content model
 
-The sample app makes no fetch requests and its production CSP disallows connections. Adding a URL-import feature requires a deliberate CSP/connect-src change and user-facing explanation; do not weaken this policy globally without reviewing the new boundary.
+`calendar.js`, `content.js`, and `guides.js` are versioned curated data. They support the UI; they are not a calculation engine or a substitute for a tradition-specific local panchang.
 
-## HTML and CSS
+Every new devotional item needs an identifier, language/script fields, transliteration and meaning where supplied, attribution, source edition, rights/reuse status, and review status. See `CONTENT-GOVERNANCE.md`.
 
-Share a small site shell; let tools own their workflows. Keep keyboard labels, live status, visible focus, touch targets, mobile overflow checks and reduced visual clutter. Test real outputs, not only enabled buttons. Site titles and origins must be changed before public release.
+## Build modes and hosting
 
-## Docs compilation
+`site.config.json` owns the product name, canonical origin, and production branch.
 
-The starter compiler supports headings, paragraphs and tilde-fenced code, escaping HTML. It is deliberately smaller than the original project's renderer; it does not pretend to support tables, embedded HTML or full Markdown links. URLs in the source handbook remain readable text. Source docs are rebuilt into dist/docs using the same stylesheet. Generated outputs are ignored; a clean build is the source of deployment truth. Add parser tests before extending syntax.
+- `DEPLOY_ENV=production` emits production robots and sitemap content for `https://hinducompanion.com`.
+- Local and preview builds are noindex by default.
+- GitHub Pages receives `dist/` only after the quality workflow succeeds on `main`.
+- `public/CNAME` declares `hinducompanion.com`; DNS and HTTPS verification are external configuration.
 
-## Hosting boundary
+Cloudflare-specific `_headers` are retained as future-hosting configuration, but GitHub Pages does not apply them. Do not claim those headers are live on GitHub Pages without deployed-header evidence.
 
-Only dist is public. _headers is interpreted by Pages, not by the simple local server. Verify real deployed headers separately. The dev server is loopback-only and is not a hardened production server. New browser APIs, third-party libraries, input formats, storage or backend services require an ADR and new tests.
+## Change boundaries
+
+A calendar calculation engine, remote content service, audio hosting, accounts, offline service worker, or AI capability requires an ADR, privacy review, source/license review, and targeted tests before it is added.

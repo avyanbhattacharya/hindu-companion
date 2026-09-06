@@ -1,23 +1,24 @@
-# Testing without endless pipelines
+# Testing
 
 ## Layers
 
-Node tests cover configuration, parsing, validation, limits and build/export invariants without browser downloads. Playwright checks real UI interactions and downloaded bytes. Chromium is the deep default; WebKit and iPhone emulation cover high-risk compatibility paths. The tiny starter runs both sample tests in all three engines; as tools grow, narrow compatibility to representative workflows rather than duplicating everything.
+- `node:test` verifies build safety, document escaping, preview behavior, production canonical/sitemap output, GitHub Pages CNAME inclusion, and export boundaries.
+- Playwright runs actual user flows in Chromium, WebKit, and mobile WebKit.
+- GitHub Actions runs the static job within three minutes and the browser job within eight minutes. Browser tests use a 30-second test timeout, a four-minute CI ceiling, two workers, one retry, traces on first retry, and failure reports.
 
-Pin the Playwright package AND browser-cache version together. Commit the npm lockfile and use npm ci. Install browser OS dependencies even on a browser-cache hit. Cache browser binaries, not assumptions about the runner.
+## Current regression coverage
 
-## Budgets
+The browser suite verifies location switching, bhajan search, sing-along open/close, no external runtime requests, Home Program visibility, and a mobile overflow guard.
 
-Starter CI: static job 3 minutes, browser job 8 minutes. Test timeout 30 seconds, expectation timeout 5 seconds, browser global ceiling 4 minutes in CI, 2 workers, 1 retry. Trace only first retry; screenshots on failure; reports uploaded on failure. New commits cancel obsolete runs. Split future large suites into named tool-family steps/jobs while preserving bounds.
+## Required additions with feature work
 
-Do not add waitForTimeout, arbitrary sleeps, unbounded initialization, continue-on-error, or test skipping as repairs. Wait for a state or poll a meaningful property. Failed browser downloads are environment failures, not passing tests.
+Add direct regression coverage for:
 
-## Feature minimum
+- Favorites persistence and corrupted local-storage recovery.
+- Program add, remove, reorder, presets, share links, and hash routing.
+- Festival-guide navigation and linked songs.
+- Filters, script/meaning/font toggles, keyboard behavior, and print invocation.
+- Content-schema validation, source/review metadata, and supported-location assumptions.
+- Published-site behavior under the GitHub Pages project path and custom-domain configuration once DNS is active.
 
-Happy path; actual output/content; invalid/empty/oversized input; cancellation and stale completion; responsive overflow; keyboard/touch; resource cleanup; meaningful privacy/network assertions. Use deterministic fixtures. Mock external responses for URL failure/CORS cases; separately label live manual evidence.
-
-WebKit emulation is not every physical iPhone or GPU. Print invocation can be stubbed, but native dialogs and physical print output need manual acceptance. Source-string assertions supplement rather than replace behavioral tests.
-
-## Release report
-
-Record commit SHA, workflow URL, each job result, skipped or blocked checks, manual evidence and remaining risks. A previous green run is not evidence for a later commit. Do not merge a draft just because a preview renders.
+Never replace a meaningful assertion with a fixed sleep, a skipped test, or `continue-on-error`. A green test run is evidence only for that commit.
