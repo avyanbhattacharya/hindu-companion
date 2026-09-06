@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hinducompanion.com/sitemap-index.xml

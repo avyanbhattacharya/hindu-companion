@@ -1,30 +1,27 @@
 # Architecture
 
-## Runtime and trust boundary
+## Runtime model
 
-Bhakti Companion is a static site built from semantic HTML, CSS, and plain browser JavaScript. Node 24 and Playwright are development-only. There is no runtime server, account system, analytics, or API key.
+Hindu Companion is an Astro static site. Astro renders `.astro` pages and Markdown content into static HTML at build time. GitHub Pages serves the generated `dist/` directory.
 
-Runtime sources live in `public/`; `scripts/build.cjs` copies only those files into `dist/`. Repository docs are compiled into noindex handbook pages. Tests, source assets, package metadata, and build tooling are never part of the published artifact.
-
-The deployed page makes no network requests after its static assets load. Favorites and Home Program selections are stored in browser local storage on the current device.
+There is no web server, database, account, analytics service, or runtime content API. Browser interactions should remain optional and local-first.
 
 ## Content model
 
-`calendar.js`, `content.js`, and `guides.js` are versioned curated data. They support the UI; they are not a calculation engine or a substitute for a tradition-specific local panchang.
+`src/content/config.ts` defines the content schemas. Entries live in these collections:
 
-Every new devotional item needs an identifier, language/script fields, transliteration and meaning where supplied, attribution, source edition, rights/reuse status, and review status. See `CONTENT-GOVERNANCE.md`.
+- `src/content/bhajans/` — bhajans, kirtans, prayers, and stotras.
+- `src/content/guides/` — festival and home-practice guides.
 
-## Build modes and hosting
+Each Markdown file creates a static route. Frontmatter is validated during the build; provenance is mandatory.
 
-`site.config.json` owns the product name, canonical origin, and production branch.
+## Presentation model
 
-- `DEPLOY_ENV=production` emits production robots and sitemap content for `https://hinducompanion.com`.
-- Local and preview builds are noindex by default.
-- GitHub Pages receives `dist/` only after the quality workflow succeeds on `main`.
-- `public/CNAME` declares `hinducompanion.com`; DNS and HTTPS verification are external configuration.
+- `src/layouts/BaseLayout.astro` owns document metadata and shared navigation.
+- `src/components/` contains reusable view components.
+- `src/styles/theme.css` owns the design tokens. Prefer token edits and component classes over page-specific inline styling.
+- `src/pages/` owns routes and contains no unreviewed devotional source text.
 
-Cloudflare-specific `_headers` are retained as future-hosting configuration, but GitHub Pages does not apply them. Do not claim those headers are live on GitHub Pages without deployed-header evidence.
+## Deployment
 
-## Change boundaries
-
-A calendar calculation engine, remote content service, audio hosting, accounts, offline service worker, or AI capability requires an ADR, privacy review, source/license review, and targeted tests before it is added.
+`Starter quality` runs tests and the Astro build. The Pages workflow runs only after a successful `main` quality run, builds with `npm run build`, and deploys `dist/`.

@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'; import ContentCard from '../../components/ContentCard.astro'; import { getCollection } from 'astro:content';
+const bhajans = (await getCollection('bhajans')).sort((a,b) => a.data.title.localeCompare(b.data.title));
+---
+<BaseLayout title="Bhajans & kirtans — Hindu Companion"><div class="eyebrow">Devotional library</div><h1>Bhajans, kirtans, and prayers.</h1><p class="lead">Original text, transliteration, plain-language meaning, and source notes—organized as reviewed Markdown content.</p><div class="grid section">{bhajans.map(item => <ContentCard href={`/bhajans/${item.slug}`} title={item.data.title} original={item.data.titleOriginal} meta={`${item.data.language} · ${item.data.tradition}`} description={item.data.description} />)}</div></BaseLayout>
