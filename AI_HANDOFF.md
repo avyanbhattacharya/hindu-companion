@@ -10,9 +10,10 @@ Work only on `collaboration/ai-studio-jules` unless Abhishek explicitly gives yo
 
 ## Editorial & AI Agent Boundary
 
-- Google agents (AI Studio / Jules) may create and prepare content entries in `src/content/bhajans/` with `status: draft`.
-- **AI agents must NEVER set `status: published` on any devotional entry.**
-- Only Abhishek or a designated human editor may review entries and set `status: published`.
+- Unapproved drafts and research belong in the separate private content repository.
+- `src/content/bhajans/` in this public repository contains only approved `status: published` entries.
+- **AI agents must NEVER commit unverified drafts to this public repo or set `status: published`.**
+- Only Abhishek or a designated human editor may review entries and publish them to this repository.
 
 ## Project at a glance
 

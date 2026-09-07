@@ -15,13 +15,14 @@ Each new song, prayer, guide, or calendar entry must record the minimal editoria
 
 Do not copy a website merely because it is publicly readable. Contemporary lyrics, translations, recordings, scans, and editorial notes may be protected even when an older original work is public domain.
 
-## Review workflow & AI agent boundary
+## Repository Boundary & Review Workflow
 
-1. Google AI Studio and Jules agents may prepare new content entries with `status: draft`.
-2. **AI agents must NEVER change `status` from `draft` to `published`.**
-3. Only Abhishek or a designated human editor may verify the text/translation and set `status` to `published`.
-4. Preserve variant readings rather than silently combining traditions.
-5. Keep a correction path and record the edition/version used in `source`.
+1. Unapproved drafts, research notes, and unverified texts belong in the **separate private content repository**.
+2. `src/content/bhajans/` in this public repository contains **only approved `status: published` entries**.
+3. Google AI Studio and Jules agents may prepare new content entries as `status: draft` in private draft storage, but **must NEVER set `status: published` or commit unverified drafts to this public repository**.
+4. Only Abhishek or a designated human editor may verify text/translation accuracy and move entries into this public repository with `status: published`.
+5. Preserve variant readings rather than silently combining traditions.
+6. Keep a correction path and record the edition/version used in `source`.
 
 ## Calendar boundary
 
