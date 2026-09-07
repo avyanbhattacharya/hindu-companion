@@ -19,8 +19,10 @@ originalText: |
 transliteration: Hare Krishna Hare Krishna, Krishna Krishna Hare Hare / Hare Rama Hare Rama, Rama Rama Hare Hare.
 englishMeaning: O Hari (Radha), O Krishna, O Rama, please engage me in your devotional service.
 translationStatus: complete
-rightsStatus: public-domain
-rightsBasis: Ancient classical Vedic scripture text (pre-1928 public domain worldwide).
+textRightsStatus: public-domain
+textRightsBasis: Ancient classical Upanishadic scripture text public domain worldwide.
+translationRightsStatus: public-domain
+translationRightsBasis: Standard public domain word-for-word devotional chant translation.
 tags:
   - maha-mantra
   - kirtan

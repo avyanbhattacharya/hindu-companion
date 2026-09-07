@@ -55,13 +55,23 @@ const status = entry.data.status || 'verified';
         </div>
       )}
       <div class="meta-item">
-        <span class="meta-item-label">Rights Status</span>
-        <span class="meta-item-value">{entry.data.rightsStatus}</span>
+        <span class="meta-item-label">Text Rights</span>
+        <span class="meta-item-value">{entry.data.textRightsStatus}</span>
       </div>
-      {entry.data.rightsBasis && (
+      {entry.data.textRightsBasis && (
         <div class="meta-item">
-          <span class="meta-item-label">Rights Basis</span>
-          <span class="meta-item-value">{entry.data.rightsBasis}</span>
+          <span class="meta-item-label">Text Rights Basis</span>
+          <span class="meta-item-value">{entry.data.textRightsBasis}</span>
+        </div>
+      )}
+      <div class="meta-item">
+        <span class="meta-item-label">Translation Rights</span>
+        <span class="meta-item-value">{entry.data.translationRightsStatus}</span>
+      </div>
+      {entry.data.translationRightsBasis && (
+        <div class="meta-item">
+          <span class="meta-item-label">Translation Rights Basis</span>
+          <span class="meta-item-value">{entry.data.translationRightsBasis}</span>
         </div>
       )}
       <div class="meta-item">

@@ -16,9 +16,9 @@ test('content entries include required provenance fields', () => {
   }
 });
 
-test('bhajan entries specify mandatory provenance, rights, and status metadata', () => {
+test('bhajan entries specify mandatory provenance, split rights, and status metadata', () => {
   const validStatuses = ['verified', 'draft', 'needs-review', 'not-published'];
-  const validRights = ['public-domain', 'permission-granted', 'original-work', 'link-only'];
+  const validRights = ['public-domain', 'permission-granted', 'original-work', 'link-only', 'needs-review'];
 
   for (const file of fs.readdirSync(path.join(root, 'src/content/bhajans'))) {
     const content = fs.readFileSync(path.join(root, 'src/content/bhajans', file), 'utf8');
@@ -31,11 +31,18 @@ test('bhajan entries specify mandatory provenance, rights, and status metadata',
       `${file} has invalid status '${statusMatch[1]}'`
     );
 
-    const rightsMatch = content.match(/^rightsStatus:\s*([a-z-]+)/m);
-    assert.ok(rightsMatch, `${file} is missing mandatory rightsStatus field`);
+    const textRightsMatch = content.match(/^textRightsStatus:\s*([a-z-]+)/m);
+    assert.ok(textRightsMatch, `${file} is missing mandatory textRightsStatus field`);
     assert.ok(
-      validRights.includes(rightsMatch[1]),
-      `${file} has invalid rightsStatus '${rightsMatch[1]}'`
+      validRights.includes(textRightsMatch[1]),
+      `${file} has invalid textRightsStatus '${textRightsMatch[1]}'`
+    );
+
+    const transRightsMatch = content.match(/^translationRightsStatus:\s*([a-z-]+)/m);
+    assert.ok(transRightsMatch, `${file} is missing mandatory translationRightsStatus field`);
+    assert.ok(
+      validRights.includes(transRightsMatch[1]),
+      `${file} has invalid translationRightsStatus '${transRightsMatch[1]}'`
     );
 
     const langMatch = content.match(/^language:\s*.+/m);
@@ -44,10 +51,11 @@ test('bhajan entries specify mandatory provenance, rights, and status metadata',
     const transStatusMatch = content.match(/^translationStatus:\s*.+/m);
     assert.ok(transStatusMatch, `${file} is missing mandatory translationStatus field`);
 
-    // Public entries must have documented sourceUrl and rightsBasis
+    // Public entries must have documented sourceUrl, textRightsBasis, and translationRightsBasis
     if (statusMatch[1] === 'verified') {
       assert.match(content, /^sourceUrl:\s*https?:\/\/.+/m, `${file} (public) needs a sourceUrl`);
-      assert.match(content, /^rightsBasis:\s*.+/m, `${file} (public) needs a rightsBasis explanation`);
+      assert.match(content, /^textRightsBasis:\s*.+/m, `${file} (public) needs a textRightsBasis explanation`);
+      assert.match(content, /^translationRightsBasis:\s*.+/m, `${file} (public) needs a translationRightsBasis explanation`);
     }
   }
 });

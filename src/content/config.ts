@@ -1,5 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 
+const rightsEnum = z.enum(['public-domain', 'permission-granted', 'original-work', 'link-only', 'needs-review']);
+
 const bhajans = defineCollection({
   type: 'content',
   schema: z.object({
@@ -22,8 +24,13 @@ const bhajans = defineCollection({
     transliteration: z.string().optional(),
     englishMeaning: z.string().optional(),
     translationStatus: z.enum(['not-translated', 'draft', 'in-review', 'reviewed', 'complete']).default('complete'),
-    rightsStatus: z.enum(['public-domain', 'permission-granted', 'original-work', 'link-only']).default('public-domain'),
-    rightsBasis: z.string().optional(),
+
+    // Rights status split between original text and translation/transliteration
+    textRightsStatus: rightsEnum.default('needs-review'),
+    textRightsBasis: z.string().optional(),
+    translationRightsStatus: rightsEnum.default('needs-review'),
+    translationRightsBasis: z.string().optional(),
+
     reviewer: z.string().optional(),
     tags: z.array(z.string()).default([]),
 

@@ -16,7 +16,7 @@ featured: true
 originalText: |
   जय राधा माधव कुञ्ज बिहारी ।
   गोपी जन वल्लभ गिरिवर धारी ॥
-  जशोदा नन्दन ब्रज जन रंजन ।
+  जशोदा नन्दन ब्रজ जन रंजन ।
   यमुना तीर वन चारी ॥
 transliteration: |
   Jaya Radha-Madhava, Kunja-bihari /
@@ -25,8 +25,10 @@ transliteration: |
   Yamuna-tira-vana-chari.
 englishMeaning: All glories to Radha and Madhava, who enjoy loving pastimes in the groves of Vrindavan! He is the beloved of the gopis and the lifter of Govardhana Hill, the delight of Yashoda and the residents of Vraja, wandering in the forests along the banks of the Yamuna.
 translationStatus: complete
-rightsStatus: public-domain
-rightsBasis: 19th-century devotional text published in 1893 (author died 1914; public domain).
+textRightsStatus: public-domain
+textRightsBasis: 19th-century text published in 1893 (author died 1914; public domain).
+translationRightsStatus: public-domain
+translationRightsBasis: Literal line-by-line translation of 1893 public-domain text.
 tags:
   - bhajan
   - sandhya-arati

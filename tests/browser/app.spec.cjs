@@ -69,8 +69,8 @@ test('devotional library browse, filter, search, language switcher, and non-publ
   await page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' }).first().click();
   await expect(page.getByText('Source Citation')).toBeVisible();
   await expect(page.getByText('Source Link')).toBeVisible();
-  await expect(page.getByText('Rights Status')).toBeVisible();
-  await expect(page.getByText('Rights Basis')).toBeVisible();
+  await expect(page.getByText('Text Rights', { exact: true })).toBeVisible();
+  await expect(page.getByText('Translation Rights', { exact: true })).toBeVisible();
   await expect(page.getByText('Translation Status')).toBeVisible();
   await expect(page.getByText('Gaudiya Vaishnava, Universal')).toBeVisible();
 });

@@ -18,7 +18,10 @@ originalText: |
 transliteration: Adharam madhuram vadanam madhuram nayanam madhuram hasitam madhuram...
 englishMeaning: His lips are sweet, His face is sweet, His eyes are sweet, His smile is sweet... Everything is sweet about the Lord of Sweetness.
 translationStatus: in-review
-rightsStatus: public-domain
+textRightsStatus: needs-review
+textRightsBasis: Traditional stotra text pending comparison against public-domain manuscript edition.
+translationRightsStatus: needs-review
+translationRightsBasis: English summary translation under review for copyright and accuracy.
 tags:
   - stotra
   - pushtimarg
