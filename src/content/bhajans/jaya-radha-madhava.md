@@ -1,6 +1,6 @@
 ---
 title: Jaya Radha-Madhava
-titleOriginal: जय राधा माधव / জয় রাধা মাধব
+titleOriginal: जय राधा माधव / जय রাধা মাধব
 language: Sanskrit
 tradition: Gaudiya Vaishnava
 traditions:
@@ -9,14 +9,13 @@ category: bhajan
 deity: Radha-Krishna
 author: Bhaktivinoda Thakura
 source: Gitavali by Srila Bhaktivinoda Thakura (1893)
-sourceEdition: Gitavali (published 1893)
-sourceUrl: https://archive.org/details/gitavali-bhaktivinoda
+sourceEdition: Gitavali
 description: A beloved invocation to Radha and Krishna, suitable for a home kirtan or daily devotional practice.
 featured: true
 originalText: |
   जय राधा माधव कुञ्ज बिहारी ।
   गोपी जन वल्लभ गिरिवर धारी ॥
-  जशोदा नन्दन ब्रজ जन रंजन ।
+  जशोदा नन्दन ब्रज जन रंजन ।
   यमुना तीर वन चारी ॥
 transliteration: |
   Jaya Radha-Madhava, Kunja-bihari /
@@ -24,16 +23,16 @@ transliteration: |
   Jashoda-nandana Braja-jana-ranjana /
   Yamuna-tira-vana-chari.
 englishMeaning: All glories to Radha and Madhava, who enjoy loving pastimes in the groves of Vrindavan! He is the beloved of the gopis and the lifter of Govardhana Hill, the delight of Yashoda and the residents of Vraja, wandering in the forests along the banks of the Yamuna.
-translationStatus: complete
-textRightsStatus: public-domain
-textRightsBasis: 19th-century text published in 1893 (author died 1914; public domain).
-translationRightsStatus: public-domain
-translationRightsBasis: Literal line-by-line translation of 1893 public-domain text.
+translationStatus: in-review
+textRightsStatus: needs-review
+textRightsBasis: Text and translation reuse status require human verification.
+translationRightsStatus: needs-review
+translationRightsBasis: Text and translation reuse status require human verification.
 tags:
   - bhajan
   - sandhya-arati
   - kirtan
-status: verified
+status: needs-review
 ---
 
 ## Text

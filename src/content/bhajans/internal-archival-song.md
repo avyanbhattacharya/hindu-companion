@@ -15,10 +15,10 @@ originalText: |
 transliteration: Aprakasita padavali giti
 englishMeaning: Unpublished devotional song text
 translationStatus: not-translated
-textRightsStatus: link-only
-textRightsBasis: Archived manuscript text requires rights clearance.
+textRightsStatus: needs-review
+textRightsBasis: Text and translation reuse status require human verification.
 translationRightsStatus: needs-review
-translationRightsBasis: Unreviewed internal translation draft.
+translationRightsBasis: Text and translation reuse status require human verification.
 tags:
   - archive
   - internal

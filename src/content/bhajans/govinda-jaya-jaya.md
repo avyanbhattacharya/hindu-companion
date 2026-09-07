@@ -18,9 +18,9 @@ transliteration: Govinda jaya jaya gopala jaya jaya / Radha-ramana hari govinda 
 englishMeaning: All victories to Govinda! All victories to Gopala! All victories to Hari, Govinda, the beloved of Radha!
 translationStatus: draft
 textRightsStatus: needs-review
-textRightsBasis: Folk oral chant requires verified primary print edition documentation.
+textRightsBasis: Text and translation reuse status require human verification.
 translationRightsStatus: needs-review
-translationRightsBasis: Draft English reading requires editorial review before public release.
+translationRightsBasis: Text and translation reuse status require human verification.
 tags:
   - kirtan
   - naam-sankirtan

@@ -9,7 +9,7 @@ traditions:
 category: stotra
 deity: Krishna
 author: Vallabhacharya
-source: Stotra Ratnavali, Gita Press Gorakhpur
+source: Stotra Ratnavali
 description: Eight verses describing the sweet nature of Lord Krishna by Mahaprabhu Vallabhacharya.
 featured: false
 originalText: |
@@ -19,9 +19,9 @@ transliteration: Adharam madhuram vadanam madhuram nayanam madhuram hasitam madh
 englishMeaning: His lips are sweet, His face is sweet, His eyes are sweet, His smile is sweet... Everything is sweet about the Lord of Sweetness.
 translationStatus: in-review
 textRightsStatus: needs-review
-textRightsBasis: Traditional stotra text pending comparison against public-domain manuscript edition.
+textRightsBasis: Text and translation reuse status require human verification.
 translationRightsStatus: needs-review
-translationRightsBasis: English summary translation under review for copyright and accuracy.
+translationRightsBasis: Text and translation reuse status require human verification.
 tags:
   - stotra
   - pushtimarg
