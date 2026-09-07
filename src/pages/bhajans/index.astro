@@ -1,5 +1,124 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import ContentCard from '../../components/ContentCard.astro'; import { getCollection } from 'astro:content';
-const bhajans = (await getCollection('bhajans')).sort((a,b) => a.data.title.localeCompare(b.data.title));
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentCard from '../../components/ContentCard.astro';
+import { getCollection } from 'astro:content';
+
+// Only public 'published' status items are generated and shown on the public site
+const allBhajans = await getCollection('bhajans');
+const bhajans = allBhajans
+  .filter(item => item.data.status === 'published')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+const languages = Array.from(new Set(bhajans.map(item => item.data.language))).sort();
+const traditions = Array.from(
+  new Set(bhajans.flatMap(item => item.data.traditions && item.data.traditions.length ? item.data.traditions : [item.data.tradition]))
+).filter(Boolean).sort();
 ---
-<BaseLayout title="Bhajans & kirtans — Hindu Companion"><div class="eyebrow">Devotional library</div><h1>Bhajans, kirtans, and prayers.</h1><p class="lead">Original text, transliteration, plain-language meaning, and source notes—organized as reviewed Markdown content.</p><div class="grid section">{bhajans.map(item => <ContentCard href={`/bhajans/${item.slug}`} title={item.data.title} original={item.data.titleOriginal} meta={`${item.data.language} · ${item.data.tradition}`} description={item.data.description} />)}</div></BaseLayout>
+<BaseLayout title="Bhajans & kirtans — Hindu Companion">
+  <div class="eyebrow">Devotional library</div>
+  <h1>Bhajans, kirtans, and prayers.</h1>
+  <p class="lead">Original text, transliteration, plain-language meaning, and source notes—organized as reviewed Markdown content.</p>
+
+  {bhajans.length === 0 ? (
+    <div class="notice" id="empty-library-message" style="margin-top: 2rem; border-left-color: var(--gold); padding: 1.5rem;">
+      <p style="margin: 0; font-size: 1.1rem; color: var(--maroon); font-weight: 600;">The devotional library is being curated. Please check back soon.</p>
+    </div>
+  ) : (
+    <>
+      <!-- Interactive Search and Language Switcher / Filter controls -->
+      <div class="controls-bar" id="library-controls">
+        <div class="search-box">
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Search by title, transliteration, deity, or tag..."
+            aria-label="Search devotional library"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="language-select" class="filter-label">Language:</label>
+          <select id="language-select" class="filter-select" aria-label="Filter by language">
+            <option value="">All languages</option>
+            {languages.map(lang => <option value={lang}>{lang}</option>)}
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="tradition-select" class="filter-label">Tradition:</label>
+          <select id="tradition-select" class="filter-select" aria-label="Filter by tradition">
+            <option value="">All traditions</option>
+            {traditions.map(trad => <option value={trad}>{trad}</option>)}
+          </select>
+        </div>
+      </div>
+
+      <div id="no-results" style="display: none; padding: 2rem 0; color: var(--muted); text-align: center;">
+        <p>No devotional entries match your search criteria.</p>
+      </div>
+
+      <div class="grid section" id="bhajans-grid" style="margin-top: 1.5rem;">
+        {bhajans.map(item => (
+          <ContentCard
+            href={`/bhajans/${item.slug}`}
+            title={item.data.title}
+            original={item.data.titleOriginal || item.data.originalText}
+            meta={`${item.data.language} · ${item.data.tradition}`}
+            language={item.data.language}
+            traditions={item.data.traditions && item.data.traditions.length ? item.data.traditions : [item.data.tradition]}
+            description={item.data.description}
+            tags={item.data.tags}
+            transliteration={item.data.transliteration}
+          />
+        ))}
+      </div>
+
+      <script>
+        const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
+        const languageSelect = document.getElementById('language-select') as HTMLSelectElement | null;
+        const traditionSelect = document.getElementById('tradition-select') as HTMLSelectElement | null;
+        const cards = document.querySelectorAll('#bhajans-grid .card');
+        const noResults = document.getElementById('no-results');
+
+        function filterCards() {
+          const query = searchInput?.value.toLowerCase().trim() || '';
+          const selectedLang = languageSelect?.value || '';
+          const selectedTradition = traditionSelect?.value || '';
+
+          let visibleCount = 0;
+
+          cards.forEach(card => {
+            const title = card.getAttribute('data-title') || '';
+            const original = card.getAttribute('data-original') || '';
+            const language = card.getAttribute('data-language') || '';
+            const traditionsAttr = card.getAttribute('data-traditions') || '';
+            const tags = card.getAttribute('data-tags') || '';
+            const textContent = card.textContent?.toLowerCase() || '';
+
+            const cardTraditionsList = traditionsAttr.split('|').map(t => t.trim().toLowerCase());
+
+            const matchesQuery = !query || title.includes(query) || original.includes(query) || tags.includes(query) || textContent.includes(query);
+            const matchesLang = !selectedLang || language === selectedLang;
+            const matchesTradition = !selectedTradition || cardTraditionsList.includes(selectedTradition.toLowerCase());
+
+            if (matchesQuery && matchesLang && matchesTradition) {
+              (card as HTMLElement).style.display = '';
+              visibleCount++;
+            } else {
+              (card as HTMLElement).style.display = 'none';
+            }
+          });
+
+          if (noResults) {
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+          }
+        }
+
+        searchInput?.addEventListener('input', filterCards);
+        languageSelect?.addEventListener('change', filterCards);
+        traditionSelect?.addEventListener('change', filterCards);
+      </script>
+    </>
+  )}
+</BaseLayout>

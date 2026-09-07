@@ -8,6 +8,13 @@ This file is for **Google AI Studio and Jules only**. Read it completely before 
 
 Work only on `collaboration/ai-studio-jules` unless Abhishek explicitly gives you another non-`main` branch. Commit your work to that branch and stop. Do not merge a pull request yourself. Do not change GitHub Pages, GitHub Actions permissions, DNS, custom-domain settings, or repository settings.
 
+## Editorial & AI Agent Boundary
+
+- Unapproved drafts and research belong in the separate private content repository.
+- `src/content/bhajans/` in this public repository contains only approved `status: published` entries.
+- **AI agents must NEVER commit unverified drafts to this public repo or set `status: published`.**
+- Only Abhishek or a designated human editor may review entries and publish them to this repository.
+
 ## Project at a glance
 
 Hindu Companion is a **static Astro 4 site**. It has no application server, database, account system, analytics, or runtime API. GitHub Pages publishes the static `dist/` output after quality checks pass.

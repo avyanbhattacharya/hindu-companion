@@ -6,23 +6,23 @@ Bhakti Companion contains devotional texts, translations, transliterations, fest
 
 ## Required metadata
 
-Each new song, prayer, guide, or calendar entry must record:
+Each new song, prayer, guide, or calendar entry must record the minimal editorial model:
 
-- Author or traditional attribution, original language/script, and tradition when known.
-- Source edition or primary reference.
-- Rights/reuse status: public domain, permission granted, original work, or link-only.
-- Translator/transliteration contributor and review status.
-- Date/location/tradition assumptions for calendar or fasting information.
+- `source`: Work title, author/tradition, and/or stable reference URL.
+- `contentOrigin`: `traditional-source`, `original-site-writing`, `permission`, or `link-only`.
+- `status`: `draft` or `published`.
+- `reviewedOn`: Optional ISO date (`YYYY-MM-DD`) set by human editor upon publication.
 
 Do not copy a website merely because it is publicly readable. Contemporary lyrics, translations, recordings, scans, and editorial notes may be protected even when an older original work is public domain.
 
-## Review workflow
+## Repository Boundary & Review Workflow
 
-1. Add a source and reuse assessment before publication.
-2. Preserve variant readings rather than silently combining traditions.
-3. Have a qualified human reviewer check original script, transliteration, English meaning, and devotional context.
-4. Label unreviewed material clearly or keep it out of the public collection.
-5. Keep a correction path and record the edition/version used.
+1. Unapproved drafts, research notes, and unverified texts belong in the **separate private content repository**.
+2. `src/content/bhajans/` in this public repository contains **only approved `status: published` entries**.
+3. Google AI Studio and Jules agents may prepare new content entries as `status: draft` in private draft storage, but **must NEVER set `status: published` or commit unverified drafts to this public repository**.
+4. Only Abhishek or a designated human editor may verify text/translation accuracy and move entries into this public repository with `status: published`.
+5. Preserve variant readings rather than silently combining traditions.
+6. Keep a correction path and record the edition/version used in `source`.
 
 ## Calendar boundary
 
