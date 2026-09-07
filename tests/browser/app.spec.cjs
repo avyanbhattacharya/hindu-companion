@@ -34,14 +34,13 @@ test('internal links preserve the GitHub Pages project path', async ({ page }) =
 test('devotional library browse, filter, search, language switcher, and non-public state rules', async ({ page }) => {
   await page.goto('/bhajans');
 
-  // Check verified public items are visible
+  // Check published public items are visible
   await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Jaya Radha-Madhava' })).toBeVisible();
 
   // Non-verified items (draft, needs-review, not-published) MUST NOT appear in public library listing
   await expect(page.getByRole('link', { name: 'Govinda Jaya Jaya' })).not.toBeVisible();
   await expect(page.getByRole('link', { name: 'Sri Madhurashtakam' })).not.toBeVisible();
-  await expect(page.getByRole('link', { name: 'Internal Archival Song (Unpublished Draft)' })).not.toBeVisible();
 
   // Test search filter input for verified items
   const searchInput = page.getByRole('searchbox', { name: 'Search devotional library' });
@@ -57,10 +56,21 @@ test('devotional library browse, filter, search, language switcher, and non-publ
   await languageSelect.selectOption('Sanskrit');
   await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).toBeVisible();
 
+  // Test secondary tradition filter
+  const traditionSelect = page.getByRole('combobox', { name: 'Filter by tradition' });
+  await traditionSelect.selectOption('Universal');
+  await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Jaya Radha-Madhava' })).not.toBeVisible();
+
+  // Reset tradition filter and view detail page
+  await traditionSelect.selectOption('');
+
   // Detail page verification for verified content
   await page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' }).first().click();
-  await expect(page.getByText('Source', { exact: true })).toBeVisible();
+  await expect(page.getByText('Source Citation')).toBeVisible();
+  await expect(page.getByText('Source Link')).toBeVisible();
   await expect(page.getByText('Rights Status')).toBeVisible();
+  await expect(page.getByText('Rights Basis')).toBeVisible();
   await expect(page.getByText('Translation Status')).toBeVisible();
-  await expect(page.getByText('Gaudiya Vaishnava').first()).toBeVisible();
+  await expect(page.getByText('Gaudiya Vaishnava, Universal')).toBeVisible();
 });

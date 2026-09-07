@@ -1,16 +1,18 @@
 ---
-const { href, title, original, meta, description, status, tags, transliteration, language } = Astro.props;
+const { href, title, original, meta, description, status, tags, transliteration, language, traditions } = Astro.props;
 const depth = Astro.url.pathname.split('/').filter(Boolean).length;
 const internalHref = `${'../'.repeat(depth)}${href.replace(/^\//, '')}/`;
 
 const badgeLabels = {
-  'verified': 'Verified',
+  'verified': 'Published',
   'draft': 'Draft',
   'needs-review': 'Needs Review',
   'not-published': 'Not Published'
 };
+
+const traditionsAttr = (traditions && traditions.length) ? traditions.join('|') : meta;
 ---
-<article class="card" data-title={title?.toLowerCase()} data-original={original?.toLowerCase()} data-language={language} data-tags={tags?.join(',').toLowerCase()} data-status={status}>
+<article class="card" data-title={title?.toLowerCase()} data-original={original?.toLowerCase()} data-language={language} data-traditions={traditionsAttr} data-tags={tags?.join(',').toLowerCase()} data-status={status}>
   <div class="card-header">
     <div class="meta">{meta}</div>
     {status && <span class={`badge badge-${status}`}>{badgeLabels[status] || status}</span>}

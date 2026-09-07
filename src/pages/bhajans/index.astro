@@ -60,6 +60,7 @@ const traditions = Array.from(
         original={item.data.titleOriginal || item.data.originalText}
         meta={`${item.data.language} · ${item.data.tradition}`}
         language={item.data.language}
+        traditions={item.data.traditions && item.data.traditions.length ? item.data.traditions : [item.data.tradition]}
         description={item.data.description}
         status={item.data.status}
         tags={item.data.tags}
@@ -86,12 +87,15 @@ const traditions = Array.from(
         const title = card.getAttribute('data-title') || '';
         const original = card.getAttribute('data-original') || '';
         const language = card.getAttribute('data-language') || '';
+        const traditionsAttr = card.getAttribute('data-traditions') || '';
         const tags = card.getAttribute('data-tags') || '';
         const textContent = card.textContent?.toLowerCase() || '';
 
+        const cardTraditionsList = traditionsAttr.split('|').map(t => t.trim().toLowerCase());
+
         const matchesQuery = !query || title.includes(query) || original.includes(query) || tags.includes(query) || textContent.includes(query);
         const matchesLang = !selectedLang || language === selectedLang;
-        const matchesTradition = !selectedTradition || textContent.includes(selectedTradition.toLowerCase());
+        const matchesTradition = !selectedTradition || cardTraditionsList.includes(selectedTradition.toLowerCase());
 
         if (matchesQuery && matchesLang && matchesTradition) {
           (card as HTMLElement).style.display = '';

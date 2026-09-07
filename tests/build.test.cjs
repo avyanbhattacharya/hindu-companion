@@ -43,6 +43,12 @@ test('bhajan entries specify mandatory provenance, rights, and status metadata',
 
     const transStatusMatch = content.match(/^translationStatus:\s*.+/m);
     assert.ok(transStatusMatch, `${file} is missing mandatory translationStatus field`);
+
+    // Public entries must have documented sourceUrl and rightsBasis
+    if (statusMatch[1] === 'verified') {
+      assert.match(content, /^sourceUrl:\s*https?:\/\/.+/m, `${file} (public) needs a sourceUrl`);
+      assert.match(content, /^rightsBasis:\s*.+/m, `${file} (public) needs a rightsBasis explanation`);
+    }
   }
 });
 

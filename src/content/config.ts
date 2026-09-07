@@ -11,8 +11,9 @@ const bhajans = defineCollection({
     category: z.enum(['bhajan', 'kirtan', 'prayer', 'stotra']),
     deity: z.string(),
     author: z.string().optional(),
-    source: z.string(), // Source edition
+    source: z.string(), // Source description/edition
     sourceEdition: z.string().optional(),
+    sourceUrl: z.string().url().optional(),
     description: z.string(),
     featured: z.boolean().default(false),
 
@@ -22,6 +23,7 @@ const bhajans = defineCollection({
     englishMeaning: z.string().optional(),
     translationStatus: z.enum(['not-translated', 'draft', 'in-review', 'reviewed', 'complete']).default('complete'),
     rightsStatus: z.enum(['public-domain', 'permission-granted', 'original-work', 'link-only']).default('public-domain'),
+    rightsBasis: z.string().optional(),
     reviewer: z.string().optional(),
     tags: z.array(z.string()).default([]),
 

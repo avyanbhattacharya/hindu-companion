@@ -17,7 +17,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 const badgeLabels: Record<string, string> = {
-  'verified': 'Verified Content',
+  'verified': 'Published',
   'draft': 'Draft',
   'needs-review': 'Needs Review',
   'not-published': 'Unpublished'
@@ -45,13 +45,25 @@ const status = entry.data.status || 'verified';
     <!-- Metadata Grid Display -->
     <div class="meta-grid">
       <div class="meta-item">
-        <span class="meta-item-label">Source</span>
+        <span class="meta-item-label">Source Citation</span>
         <span class="meta-item-value">{entry.data.sourceEdition || entry.data.source}</span>
       </div>
+      {entry.data.sourceUrl && (
+        <div class="meta-item">
+          <span class="meta-item-label">Source Link</span>
+          <span class="meta-item-value"><a href={entry.data.sourceUrl} target="_blank" rel="noopener noreferrer">Reference Edition</a></span>
+        </div>
+      )}
       <div class="meta-item">
         <span class="meta-item-label">Rights Status</span>
         <span class="meta-item-value">{entry.data.rightsStatus}</span>
       </div>
+      {entry.data.rightsBasis && (
+        <div class="meta-item">
+          <span class="meta-item-label">Rights Basis</span>
+          <span class="meta-item-value">{entry.data.rightsBasis}</span>
+        </div>
+      )}
       <div class="meta-item">
         <span class="meta-item-label">Translation Status</span>
         <span class="meta-item-value">{entry.data.translationStatus}</span>
