@@ -1,6 +1,6 @@
 ---
 title: Sri Madhurashtakam
-titleOriginal: अघरं मधुरं वदनं मधुरं
+titleOriginal: अधरं मधुरं वदनं मधुरं
 language: Sanskrit
 tradition: Vallabha Sampradaya
 traditions:
@@ -10,7 +10,6 @@ category: stotra
 deity: Krishna
 author: Vallabhacharya
 source: Stotra Ratnavali, Gita Press Gorakhpur
-sourceEdition: Stotra Ratnavali Edition 14
 description: Eight verses describing the sweet nature of Lord Krishna by Mahaprabhu Vallabhacharya.
 featured: false
 originalText: |
@@ -20,7 +19,6 @@ transliteration: Adharam madhuram vadanam madhuram nayanam madhuram hasitam madh
 englishMeaning: His lips are sweet, His face is sweet, His eyes are sweet, His smile is sweet... Everything is sweet about the Lord of Sweetness.
 translationStatus: in-review
 rightsStatus: public-domain
-reviewer: Pending Academic Review
 tags:
   - stotra
   - pushtimarg

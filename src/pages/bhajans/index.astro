@@ -3,10 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import { getCollection } from 'astro:content';
 
-// Exclude entries with status 'not-published' from public view
+// Only public 'verified' status items are generated and shown on the public site
 const allBhajans = await getCollection('bhajans');
 const bhajans = allBhajans
-  .filter(item => item.data.status !== 'not-published')
+  .filter(item => item.data.status === 'verified')
   .sort((a, b) => a.data.title.localeCompare(b.data.title));
 
 const languages = Array.from(new Set(bhajans.map(item => item.data.language))).sort();
@@ -46,16 +46,6 @@ const traditions = Array.from(
         {traditions.map(trad => <option value={trad}>{trad}</option>)}
       </select>
     </div>
-
-    <div class="filter-group">
-      <label for="status-select" class="filter-label">Status:</label>
-      <select id="status-select" class="filter-select" aria-label="Filter by review status">
-        <option value="">All published states</option>
-        <option value="verified">Verified</option>
-        <option value="draft">Draft</option>
-        <option value="needs-review">Needs Review</option>
-      </select>
-    </div>
   </div>
 
   <div id="no-results" style="display: none; padding: 2rem 0; color: var(--muted); text-align: center;">
@@ -82,7 +72,6 @@ const traditions = Array.from(
     const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
     const languageSelect = document.getElementById('language-select') as HTMLSelectElement | null;
     const traditionSelect = document.getElementById('tradition-select') as HTMLSelectElement | null;
-    const statusSelect = document.getElementById('status-select') as HTMLSelectElement | null;
     const cards = document.querySelectorAll('#bhajans-grid .card');
     const noResults = document.getElementById('no-results');
 
@@ -90,7 +79,6 @@ const traditions = Array.from(
       const query = searchInput?.value.toLowerCase().trim() || '';
       const selectedLang = languageSelect?.value || '';
       const selectedTradition = traditionSelect?.value || '';
-      const selectedStatus = statusSelect?.value || '';
 
       let visibleCount = 0;
 
@@ -99,15 +87,13 @@ const traditions = Array.from(
         const original = card.getAttribute('data-original') || '';
         const language = card.getAttribute('data-language') || '';
         const tags = card.getAttribute('data-tags') || '';
-        const status = card.getAttribute('data-status') || '';
         const textContent = card.textContent?.toLowerCase() || '';
 
         const matchesQuery = !query || title.includes(query) || original.includes(query) || tags.includes(query) || textContent.includes(query);
         const matchesLang = !selectedLang || language === selectedLang;
-        const matchesStatus = !selectedStatus || status === selectedStatus;
         const matchesTradition = !selectedTradition || textContent.includes(selectedTradition.toLowerCase());
 
-        if (matchesQuery && matchesLang && matchesStatus && matchesTradition) {
+        if (matchesQuery && matchesLang && matchesTradition) {
           (card as HTMLElement).style.display = '';
           visibleCount++;
         } else {
@@ -123,6 +109,5 @@ const traditions = Array.from(
     searchInput?.addEventListener('input', filterCards);
     languageSelect?.addEventListener('change', filterCards);
     traditionSelect?.addEventListener('change', filterCards);
-    statusSelect?.addEventListener('change', filterCards);
   </script>
 </BaseLayout>

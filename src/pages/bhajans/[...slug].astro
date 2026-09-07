@@ -4,9 +4,9 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const bhajans = await getCollection('bhajans');
-  // Include all entries except 'not-published' for static route generation
+  // ONLY 'verified' status generates a public page
   return bhajans
-    .filter(entry => entry.data.status !== 'not-published')
+    .filter(entry => entry.data.status === 'verified')
     .map(entry => ({
       params: { slug: entry.slug },
       props: { entry }
@@ -18,9 +18,9 @@ const { Content } = await render(entry);
 
 const badgeLabels: Record<string, string> = {
   'verified': 'Verified Content',
-  'draft': 'Draft - In Development',
+  'draft': 'Draft',
   'needs-review': 'Needs Review',
-  'not-published': 'Unpublished Draft'
+  'not-published': 'Unpublished'
 };
 
 const badgeClasses: Record<string, string> = {
@@ -45,7 +45,7 @@ const status = entry.data.status || 'verified';
     <!-- Metadata Grid Display -->
     <div class="meta-grid">
       <div class="meta-item">
-        <span class="meta-item-label">Source Edition</span>
+        <span class="meta-item-label">Source</span>
         <span class="meta-item-value">{entry.data.sourceEdition || entry.data.source}</span>
       </div>
       <div class="meta-item">
@@ -56,10 +56,12 @@ const status = entry.data.status || 'verified';
         <span class="meta-item-label">Translation Status</span>
         <span class="meta-item-value">{entry.data.translationStatus}</span>
       </div>
-      <div class="meta-item">
-        <span class="meta-item-label">Reviewer</span>
-        <span class="meta-item-value">{entry.data.reviewer || 'Editorial Board'}</span>
-      </div>
+      {entry.data.reviewer && (
+        <div class="meta-item">
+          <span class="meta-item-label">Reviewer</span>
+          <span class="meta-item-value">{entry.data.reviewer}</span>
+        </div>
+      )}
       <div class="meta-item">
         <span class="meta-item-label">Tradition</span>
         <span class="meta-item-value">{entry.data.traditions && entry.data.traditions.length ? entry.data.traditions.join(', ') : entry.data.tradition}</span>

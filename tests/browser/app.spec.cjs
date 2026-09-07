@@ -31,44 +31,36 @@ test('internal links preserve the GitHub Pages project path', async ({ page }) =
   await expect(page).toHaveURL(/\/bhajans\/$/);
 });
 
-test('devotional library browse, filter, search, language switcher, and status rules', async ({ page }) => {
+test('devotional library browse, filter, search, language switcher, and non-public state rules', async ({ page }) => {
   await page.goto('/bhajans');
 
-  // Check published items are visible and status badges appear
+  // Check verified public items are visible
   await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Jaya Radha-Madhava' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Govinda Jaya Jaya' })).toBeVisible();
 
-  // Excluded 'not-published' entry should NOT be listed
+  // Non-verified items (draft, needs-review, not-published) MUST NOT appear in public library listing
+  await expect(page.getByRole('link', { name: 'Govinda Jaya Jaya' })).not.toBeVisible();
+  await expect(page.getByRole('link', { name: 'Sri Madhurashtakam' })).not.toBeVisible();
   await expect(page.getByRole('link', { name: 'Internal Archival Song (Unpublished Draft)' })).not.toBeVisible();
 
-  // Test search filter input
+  // Test search filter input for verified items
   const searchInput = page.getByRole('searchbox', { name: 'Search devotional library' });
-  await searchInput.fill('Madhurashtakam');
-  await expect(page.getByRole('link', { name: 'Sri Madhurashtakam' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).not.toBeVisible();
+  await searchInput.fill('Maha-Mantra');
+  await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Jaya Radha-Madhava' })).not.toBeVisible();
 
   // Clear search
   await searchInput.fill('');
 
-  // Test language filter / switcher
+  // Test language switcher / filter
   const languageSelect = page.getByRole('combobox', { name: 'Filter by language' });
-  await languageSelect.selectOption('Hindi');
-  await expect(page.getByRole('link', { name: 'Govinda Jaya Jaya' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).not.toBeVisible();
+  await languageSelect.selectOption('Sanskrit');
+  await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).toBeVisible();
 
-  // Test status filter
-  await languageSelect.selectOption('');
-  const statusSelect = page.getByRole('combobox', { name: 'Filter by review status' });
-  await statusSelect.selectOption('needs-review');
-  await expect(page.getByRole('link', { name: 'Sri Madhurashtakam' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Jaya Radha-Madhava' })).not.toBeVisible();
-
-  // Reset status filter and view detail page schema fields
-  await statusSelect.selectOption('');
+  // Detail page verification for verified content
   await page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' }).first().click();
-  await expect(page.getByText('Source Edition')).toBeVisible();
+  await expect(page.getByText('Source', { exact: true })).toBeVisible();
   await expect(page.getByText('Rights Status')).toBeVisible();
   await expect(page.getByText('Translation Status')).toBeVisible();
-  await expect(page.getByText('Pandita K. Sharma')).toBeVisible();
+  await expect(page.getByText('Gaudiya Vaishnava').first()).toBeVisible();
 });
