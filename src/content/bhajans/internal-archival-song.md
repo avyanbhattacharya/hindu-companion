@@ -8,21 +8,17 @@ traditions:
 category: bhajan
 deity: Krishna
 source: Manuscript collection under editorial evaluation
+contentOrigin: link-only
+status: draft
 description: An archived text undergoing editorial verification before public release.
 featured: false
 originalText: |
   অপ্রকাশিত পদাবলী গীতি
 transliteration: Aprakasita padavali giti
 englishMeaning: Unpublished devotional song text
-translationStatus: not-translated
-textRightsStatus: needs-review
-textRightsBasis: Text and translation reuse status require human verification.
-translationRightsStatus: needs-review
-translationRightsBasis: Text and translation reuse status require human verification.
 tags:
   - archive
   - internal
-status: not-published
 ---
 
 ## Unverified Text

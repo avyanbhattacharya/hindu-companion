@@ -4,9 +4,9 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const bhajans = await getCollection('bhajans');
-  // ONLY 'verified' status generates a public page
+  // ONLY 'published' status generates a public static page
   return bhajans
-    .filter(entry => entry.data.status === 'verified')
+    .filter(entry => entry.data.status === 'published')
     .map(entry => ({
       params: { slug: entry.slug },
       props: { entry }
@@ -15,86 +15,13 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-
-const badgeLabels: Record<string, string> = {
-  'verified': 'Published',
-  'draft': 'Draft',
-  'needs-review': 'Needs Review',
-  'not-published': 'Unpublished'
-};
-
-const badgeClasses: Record<string, string> = {
-  'verified': 'badge-verified',
-  'draft': 'badge-draft',
-  'needs-review': 'badge-needs-review',
-  'not-published': 'badge-not-published'
-};
-
-const status = entry.data.status || 'verified';
 ---
 <BaseLayout title={`${entry.data.title} — Hindu Companion`} description={entry.data.description}>
   <article class="prose">
-    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; margin-bottom: .5rem;">
-      <div class="eyebrow">{entry.data.language} · {entry.data.category} · {entry.data.deity}</div>
-      <span class={`badge ${badgeClasses[status]}`}>{badgeLabels[status]}</span>
-    </div>
+    <div class="eyebrow" style="margin-bottom: .5rem;">{entry.data.language} · {entry.data.category} · {entry.data.deity}</div>
 
     <h1>{entry.data.title}</h1>
     {entry.data.titleOriginal && <p class="lead" style="font-family: var(--serif); font-size: 1.4rem; color: var(--maroon);">{entry.data.titleOriginal}</p>}
-
-    <!-- Metadata Grid Display -->
-    <div class="meta-grid">
-      <div class="meta-item">
-        <span class="meta-item-label">Source Citation</span>
-        <span class="meta-item-value">{entry.data.sourceEdition || entry.data.source}</span>
-      </div>
-      {entry.data.sourceUrl && (
-        <div class="meta-item">
-          <span class="meta-item-label">Source Link</span>
-          <span class="meta-item-value"><a href={entry.data.sourceUrl} target="_blank" rel="noopener noreferrer">Reference Edition</a></span>
-        </div>
-      )}
-      <div class="meta-item">
-        <span class="meta-item-label">Text Rights</span>
-        <span class="meta-item-value">{entry.data.textRightsStatus}</span>
-      </div>
-      {entry.data.textRightsBasis && (
-        <div class="meta-item">
-          <span class="meta-item-label">Text Rights Basis</span>
-          <span class="meta-item-value">{entry.data.textRightsBasis}</span>
-        </div>
-      )}
-      <div class="meta-item">
-        <span class="meta-item-label">Translation Rights</span>
-        <span class="meta-item-value">{entry.data.translationRightsStatus}</span>
-      </div>
-      {entry.data.translationRightsBasis && (
-        <div class="meta-item">
-          <span class="meta-item-label">Translation Rights Basis</span>
-          <span class="meta-item-value">{entry.data.translationRightsBasis}</span>
-        </div>
-      )}
-      <div class="meta-item">
-        <span class="meta-item-label">Translation Status</span>
-        <span class="meta-item-value">{entry.data.translationStatus}</span>
-      </div>
-      {entry.data.reviewer && (
-        <div class="meta-item">
-          <span class="meta-item-label">Reviewer</span>
-          <span class="meta-item-value">{entry.data.reviewer}</span>
-        </div>
-      )}
-      <div class="meta-item">
-        <span class="meta-item-label">Tradition</span>
-        <span class="meta-item-value">{entry.data.traditions && entry.data.traditions.length ? entry.data.traditions.join(', ') : entry.data.tradition}</span>
-      </div>
-      {entry.data.author && (
-        <div class="meta-item">
-          <span class="meta-item-label">Author</span>
-          <span class="meta-item-value">{entry.data.author}</span>
-        </div>
-      )}
-    </div>
 
     {entry.data.tags && entry.data.tags.length > 0 && (
       <div class="tags-row" style="margin-bottom: 1.5rem;">
@@ -112,12 +39,12 @@ const status = entry.data.status || 'verified';
 
     {entry.data.englishMeaning && (
       <div class="notice" style="margin-bottom: 1.5rem; border-left-color: var(--saffron);">
-        <strong>English Meaning:</strong>
+        <strong>Meaning:</strong>
         <p style="margin: .3rem 0 0;">{entry.data.englishMeaning}</p>
       </div>
     )}
 
-    <p class="notice"><strong>Source note:</strong> {entry.data.source}</p>
+    <p class="notice"><strong>Source:</strong> {entry.data.source}</p>
 
     <div class="entry-content" style="margin-top: 2rem;">
       <Content />

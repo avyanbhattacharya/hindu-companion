@@ -9,6 +9,8 @@ traditions:
 category: bhajan
 deity: Krishna
 source: Traditional Folk Kirtan
+contentOrigin: traditional-source
+status: draft
 description: A popular and joyful chant celebrating Govinda and Gopala.
 featured: false
 originalText: |
@@ -16,15 +18,9 @@ originalText: |
   राधा रमण हरि गोविन्द जय जय ॥
 transliteration: Govinda jaya jaya gopala jaya jaya / Radha-ramana hari govinda jaya jaya
 englishMeaning: All victories to Govinda! All victories to Gopala! All victories to Hari, Govinda, the beloved of Radha!
-translationStatus: draft
-textRightsStatus: needs-review
-textRightsBasis: Text and translation reuse status require human verification.
-translationRightsStatus: needs-review
-translationRightsBasis: Text and translation reuse status require human verification.
 tags:
   - kirtan
   - naam-sankirtan
-status: draft
 ---
 
 ## Text

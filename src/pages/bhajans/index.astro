@@ -3,10 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentCard from '../../components/ContentCard.astro';
 import { getCollection } from 'astro:content';
 
-// Only public 'verified' status items are generated and shown on the public site
+// Only public 'published' status items are generated and shown on the public site
 const allBhajans = await getCollection('bhajans');
 const bhajans = allBhajans
-  .filter(item => item.data.status === 'verified')
+  .filter(item => item.data.status === 'published')
   .sort((a, b) => a.data.title.localeCompare(b.data.title));
 
 const languages = Array.from(new Set(bhajans.map(item => item.data.language))).sort();
@@ -21,8 +21,7 @@ const traditions = Array.from(
 
   {bhajans.length === 0 ? (
     <div class="notice" id="empty-library-message" style="margin-top: 2rem; border-left-color: var(--gold); padding: 1.5rem;">
-      <h3 style="margin-top: 0; color: var(--maroon);">Devotional Collection Under Editorial Review</h3>
-      <p style="margin-bottom: 0;">Our devotional library is currently undergoing careful human review for text accuracy, translation fidelity, and rights clearance. Verified entries will be published here as review completes.</p>
+      <p style="margin: 0; font-size: 1.1rem; color: var(--maroon); font-weight: 600;">The devotional library is being curated. Please check back soon.</p>
     </div>
   ) : (
     <>
@@ -69,7 +68,6 @@ const traditions = Array.from(
             language={item.data.language}
             traditions={item.data.traditions && item.data.traditions.length ? item.data.traditions : [item.data.tradition]}
             description={item.data.description}
-            status={item.data.status}
             tags={item.data.tags}
             transliteration={item.data.transliteration}
           />

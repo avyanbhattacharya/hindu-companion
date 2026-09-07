@@ -27,14 +27,13 @@ test('internal links preserve the GitHub Pages project path', async ({ page }) =
   await expect(page).toHaveURL(/\/bhajans\/$/);
 });
 
-test('devotional library browse presents respectful editorial review message when all entries are non-public', async ({ page }) => {
+test('devotional library browse presents curated state message when all entries are draft', async ({ page }) => {
   await page.goto('/bhajans');
 
-  // Verify respectful message appears
-  await expect(page.getByRole('heading', { name: 'Devotional Collection Under Editorial Review' })).toBeVisible();
-  await expect(page.getByText('Our devotional library is currently undergoing careful human review')).toBeVisible();
+  // Verify curated message appears
+  await expect(page.getByText('The devotional library is being curated. Please check back soon.')).toBeVisible();
 
-  // Verify non-public entries do not appear
+  // Verify draft entries do not appear in public route or listing
   await expect(page.getByRole('link', { name: 'Hare Krishna Maha-Mantra' })).not.toBeVisible();
   await expect(page.getByRole('link', { name: 'Jaya Radha-Madhava' })).not.toBeVisible();
   await expect(page.getByRole('link', { name: 'Govinda Jaya Jaya' })).not.toBeVisible();

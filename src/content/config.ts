@@ -1,7 +1,5 @@
 import { defineCollection, z } from 'astro:content';
 
-const rightsEnum = z.enum(['public-domain', 'permission-granted', 'original-work', 'link-only', 'needs-review']);
-
 const bhajans = defineCollection({
   type: 'content',
   schema: z.object({
@@ -13,29 +11,20 @@ const bhajans = defineCollection({
     category: z.enum(['bhajan', 'kirtan', 'prayer', 'stotra']),
     deity: z.string(),
     author: z.string().optional(),
-    source: z.string(), // Source description/edition
-    sourceEdition: z.string().optional(),
-    sourceUrl: z.string().url().optional(),
     description: z.string(),
     featured: z.boolean().default(false),
 
-    // Richer schema additions
+    // Minimal editorial model
+    source: z.string(), // Work title, author/tradition, and/or stable reference URL
+    contentOrigin: z.enum(['traditional-source', 'original-site-writing', 'permission', 'link-only']),
+    status: z.enum(['draft', 'published']).default('draft'),
+    reviewedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+
+    // Devotional content fields
     originalText: z.string().optional(),
     transliteration: z.string().optional(),
     englishMeaning: z.string().optional(),
-    translationStatus: z.enum(['not-translated', 'draft', 'in-review', 'reviewed', 'complete']).default('complete'),
-
-    // Rights status split between original text and translation/transliteration
-    textRightsStatus: rightsEnum.default('needs-review'),
-    textRightsBasis: z.string().optional(),
-    translationRightsStatus: rightsEnum.default('needs-review'),
-    translationRightsBasis: z.string().optional(),
-
-    reviewer: z.string().optional(),
-    tags: z.array(z.string()).default([]),
-
-    // Explicit publication state
-    status: z.enum(['verified', 'draft', 'needs-review', 'not-published']).default('verified')
+    tags: z.array(z.string()).default([])
   })
 });
 

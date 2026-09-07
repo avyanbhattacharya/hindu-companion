@@ -9,7 +9,8 @@ traditions:
 category: kirtan
 deity: Radha-Krishna
 source: Kali-Santarana Upanishad; Chaitanya Charitamrita.
-sourceEdition: Kali-Santarana Upanishad (Sanskrit text)
+contentOrigin: traditional-source
+status: draft
 description: The sixteen-name maha-mantra, presented with original script, transliteration, and an accessible English reading.
 featured: true
 originalText: |
@@ -17,16 +18,10 @@ originalText: |
   हरे राम हरे राम राम राम हरे हरे ॥
 transliteration: Hare Krishna Hare Krishna, Krishna Krishna Hare Hare / Hare Rama Hare Rama, Rama Rama Hare Hare.
 englishMeaning: O Hari (Radha), O Krishna, O Rama, please engage me in your devotional service.
-translationStatus: in-review
-textRightsStatus: needs-review
-textRightsBasis: Text and translation reuse status require human verification.
-translationRightsStatus: needs-review
-translationRightsBasis: Text and translation reuse status require human verification.
 tags:
   - maha-mantra
   - kirtan
   - daily-chanting
-status: needs-review
 ---
 
 ## Text

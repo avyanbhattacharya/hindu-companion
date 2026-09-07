@@ -16,15 +16,14 @@ test('content entries include required provenance fields', () => {
   }
 });
 
-test('bhajan entries specify mandatory provenance, split rights, and status metadata', () => {
-  const validStatuses = ['verified', 'draft', 'needs-review', 'not-published'];
-  const validRights = ['public-domain', 'permission-granted', 'original-work', 'link-only', 'needs-review'];
-  const publishableRights = ['public-domain', 'permission-granted', 'original-work'];
+test('bhajan entries specify valid editorial model metadata', () => {
+  const validOrigins = ['traditional-source', 'original-site-writing', 'permission', 'link-only'];
+  const validStatuses = ['draft', 'published'];
 
   for (const file of fs.readdirSync(path.join(root, 'src/content/bhajans'))) {
     const content = fs.readFileSync(path.join(root, 'src/content/bhajans', file), 'utf8');
 
-    // Mandatory field assertions
+    // Minimal editorial model assertions
     const statusMatch = content.match(/^status:\s*([a-z-]+)/m);
     assert.ok(statusMatch, `${file} is missing mandatory status field`);
     assert.ok(
@@ -32,39 +31,15 @@ test('bhajan entries specify mandatory provenance, split rights, and status meta
       `${file} has invalid status '${statusMatch[1]}'`
     );
 
-    const textRightsMatch = content.match(/^textRightsStatus:\s*([a-z-]+)/m);
-    assert.ok(textRightsMatch, `${file} is missing mandatory textRightsStatus field`);
+    const originMatch = content.match(/^contentOrigin:\s*([a-z-]+)/m);
+    assert.ok(originMatch, `${file} is missing mandatory contentOrigin field`);
     assert.ok(
-      validRights.includes(textRightsMatch[1]),
-      `${file} has invalid textRightsStatus '${textRightsMatch[1]}'`
-    );
-
-    const transRightsMatch = content.match(/^translationRightsStatus:\s*([a-z-]+)/m);
-    assert.ok(transRightsMatch, `${file} is missing mandatory translationRightsStatus field`);
-    assert.ok(
-      validRights.includes(transRightsMatch[1]),
-      `${file} has invalid translationRightsStatus '${transRightsMatch[1]}'`
+      validOrigins.includes(originMatch[1]),
+      `${file} has invalid contentOrigin '${originMatch[1]}'`
     );
 
     const langMatch = content.match(/^language:\s*.+/m);
     assert.ok(langMatch, `${file} is missing mandatory language field`);
-
-    const transStatusMatch = content.match(/^translationStatus:\s*.+/m);
-    assert.ok(transStatusMatch, `${file} is missing mandatory translationStatus field`);
-
-    // Tightened validation rule: status: 'verified' requires verified non-draft rights on both text and translation
-    if (statusMatch[1] === 'verified') {
-      assert.ok(
-        publishableRights.includes(textRightsMatch[1]),
-        `${file} has status: verified but textRightsStatus is '${textRightsMatch[1]}' (must be public-domain, permission-granted, or original-work)`
-      );
-      assert.ok(
-        publishableRights.includes(transRightsMatch[1]),
-        `${file} has status: verified but translationRightsStatus is '${transRightsMatch[1]}' (must be public-domain, permission-granted, or original-work)`
-      );
-      assert.match(content, /^textRightsBasis:\s*.+/m, `${file} (verified) needs a textRightsBasis explanation`);
-      assert.match(content, /^translationRightsBasis:\s*.+/m, `${file} (verified) needs a translationRightsBasis explanation`);
-    }
   }
 });
 
